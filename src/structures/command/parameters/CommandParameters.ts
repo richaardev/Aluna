@@ -12,6 +12,7 @@ export default class CommandParameters {
                 if (param.full) arg = args.slice(i).join(" ");
                 let tipo = types[param.type];
 
+                if (!arg && param.required) throw new Error(param.errorMessage)
                 let parsed = tipo.parse(arg, ctx, param);
                 result.push(parsed);
             }

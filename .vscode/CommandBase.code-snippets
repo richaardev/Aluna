@@ -1,0 +1,24 @@
+{
+	"Create Command": {
+        "prefix": "cmd",
+        "body": [
+			"import AlunaClient from \"../../AlunaClient\";",
+			"import { Command, CommandContext } from \"../../structures/command\";",
+            "",
+            "export default class ${TM_FILENAME_BASE} extends Command {",
+            "    constructor(client: AlunaClient) {",
+            "        super(client, {",
+            "            labels: [\"${1:${TM_FILENAME_BASE/(^.+)(?:Command)$/${1:/downcase}/}}\"$2],",
+            "            requirements: {",
+            "                devOnly: true,",
+            "            },",
+            "        });",
+            "    }",
+            "    async execute(ctx: CommandContext) {",
+            "        $3",
+            "    }",
+            "}"
+        ],
+        "description": "Create Command"
+    }
+}

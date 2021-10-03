@@ -2,8 +2,6 @@ import AlunaClient from "../../AlunaClient";
 import CommandContext from "./CommandContext";
 import CommandRequirements, { _CommandRequirements } from "./CommandRequirements";
 import CommandParameters from "./parameters/CommandParameters";
-import { _String } from "./parameters/types/string";
-
 
 export default class Command {
     public client: AlunaClient;
@@ -42,7 +40,10 @@ interface CommandOptions {
     parameters?: CommandParametersInterface[]
 }
 
-export interface CommandParametersInterface extends _String {
+export interface CommandParametersInterface {
     full?: boolean;
-    type: "string" | "number";
+    type: "string" | "number" | "user" | "member";
+    errorMessage: string
+    required?: boolean;
+    [value: string]: any
 }

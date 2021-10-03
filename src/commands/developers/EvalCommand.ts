@@ -18,10 +18,8 @@ export default class EvalCommand extends Command {
             ]
         })
     }
-    async execute(ctx: CommandContext, toEval: string) {
+    async execute(ctx: CommandContext, code: string) {
         try {
-            let code = toEval
-
             if (code.startsWith("```js\n"))
                 code = code.substring(5, code.length - 3);
             let evaled = await eval(code);

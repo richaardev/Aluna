@@ -2,14 +2,13 @@ import { CommandContext } from "../.."
 
 let defVar = (o: any, b: string, c: any) => (typeof o[b] === "undefined" ? c : o[b])
 export default class String {
-    static parseOptions(options: _String) {
+    static parseOptions(options: StringInterface) {
         return {
             ...options,
-            required: defVar(options, 'required', true),
             errorMessage: options.errorMessage
         }
     }
-    static parse(arg: string | undefined, ctx: CommandContext, opt: _String) {
+    static parse(arg: string | undefined, ctx: CommandContext, opt: StringInterface) {
         let options = this.parseOptions(opt)
 
 
@@ -20,8 +19,7 @@ export default class String {
     }
 }
 
-
-export interface _String {
+interface StringInterface {
     errorMessage: string,
     required?: boolean
 }
