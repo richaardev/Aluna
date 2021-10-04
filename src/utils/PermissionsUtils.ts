@@ -11,6 +11,9 @@ export default class PermissionUtils {
         return false;
     }
 
+    /** 
+     * * Isso é uma forma que eu fiz para verificar se o usuario tem todas as permissões exigidas no "@param permissions"
+    */
     static hasPermissions(permissions: (keyof Constants["Permissions"])[], member: Member, channel: TextChannel) {
         let Permissions = Constants["Permissions"]
         let perms = channel.permissionsOf(member.id);
