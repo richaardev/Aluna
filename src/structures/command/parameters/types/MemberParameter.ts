@@ -12,8 +12,7 @@ export default function member(options: UserInterface): UserInterface {
             
             if (!u && !opt.required) return null
             let member = ctx.guild?.members.get(u?.id)
-
-            if (!member && this) throw new Error("Não foi possivel encontrar esse membro no servidor!")
+            if (!member) throw new Error("Não foi possivel encontrar esse membro no servidor!")
             return member
         }
     }
