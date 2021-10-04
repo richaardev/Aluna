@@ -6,7 +6,7 @@ import path from "path";
 
 export default class CommandManager extends Manager<string, Command> {
     _load() {
-        const baseDir = path.resolve(__dirname, "@/", "commands")
+        const baseDir = path.resolve(__dirname, "../", "commands")
         readdirSync(baseDir).forEach(dir => {
             const commandsf = readdirSync(path.resolve(baseDir, `${dir}`))
             for(let file of commandsf) {

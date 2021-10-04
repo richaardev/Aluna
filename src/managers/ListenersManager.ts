@@ -5,7 +5,7 @@ import path from "path"
 
 export default class EventsManager extends Manager<string, any> {
     _load() {
-        const baseDir = path.resolve(__dirname, "@/", "listeners")
+        const baseDir = path.resolve(__dirname, "../", "listeners")
         readdirSync(baseDir).forEach(dir => {
             import(`${baseDir}\\${dir}`).then(_listener => {
                 let listener = new _listener.default(this.client)
