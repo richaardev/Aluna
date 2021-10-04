@@ -1,7 +1,7 @@
 import AlunaClient from "@/AlunaClient";
 import { Command, CommandContext } from "@/structures/command";
 import user from "@/structures/command/parameters/types/UserParameter";
-import { Member } from "eris";
+import { User } from "eris";
 
 export default class TestCommand extends Command {
     constructor(client: AlunaClient) {
@@ -18,8 +18,8 @@ export default class TestCommand extends Command {
             ]
         });
     }
-    async execute(ctx: CommandContext, user: Member) {
+    async execute(ctx: CommandContext, user: User) {
         if (!user) return ctx.channel.createMessage("ninguem")
-        ctx.channel.createMessage(`${user.username} ${user.ban}`)
+        ctx.channel.createMessage(`${user.username}`)
     }
 }
