@@ -5,9 +5,9 @@
         "emitDecoratorMetadata": true,
         "baseUrl": "./src",
         "paths": {
-            "@/*": [
-                "*"
-            ]
+            "@/*": ["*"],
+             "@structures": ["./structures"],
+             "@utils": ["./utils"]
         },
         "module": "commonjs",
         "resolveJsonModule": true,

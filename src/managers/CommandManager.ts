@@ -1,13 +1,12 @@
+import { Command } from "@/structures/command";
+import Manager from "@/structures/Manager";
+import Logger from "@/utils/Logger";
 import { readdirSync } from "fs";
 import path from "path";
-import AlunaClient from "../AlunaClient";
-import { Command } from "../structures/command";
-import Manager from "../structures/Manager";
-import Logger from "../utils/Logger";
 
 export default class CommandManager extends Manager<string, Command> {
     _load() {
-        const baseDir = path.resolve(__dirname, "../", "commands")
+        const baseDir = path.resolve(__dirname, "@/", "commands")
         readdirSync(baseDir).forEach(dir => {
             const commandsf = readdirSync(path.resolve(baseDir, `${dir}`))
             for(let file of commandsf) {

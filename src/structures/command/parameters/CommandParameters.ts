@@ -1,6 +1,4 @@
 import { CommandContext } from "..";
-import { CommandParametersInterface } from "../Command";
-import types from "./types";
 import { ParameterInterface } from "./types/Parameter";
 
 export default class CommandParameters {

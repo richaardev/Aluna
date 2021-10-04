@@ -1,4 +1,4 @@
-import AlunaClient from "../AlunaClient";
+import AlunaClient from "@/AlunaClient";
 
 export default class Manager<K, V> extends Map<K, V> {
     public client: AlunaClient;

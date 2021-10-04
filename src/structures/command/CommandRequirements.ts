@@ -1,4 +1,4 @@
-import PermissionUtils from "../../utils/PermissionsUtils";
+import PermissionUtils from "@/utils/PermissionsUtils";
 import { Constants } from "eris";
 import { CommandContext } from ".";
 

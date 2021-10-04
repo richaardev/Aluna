@@ -1,8 +1,7 @@
-import { Command, CommandContext } from "../../structures/command";
-import AlunaClient from "../../AlunaClient";
-import { Member, User } from "eris";
-import string from "../../structures/command/parameters/types/StringParameter";
-import user from "../../structures/command/parameters/types/UserParameter";
+import AlunaClient from "@/AlunaClient";
+import { Command, CommandContext } from "@/structures/command";
+import user from "@/structures/command/parameters/types/UserParameter";
+import { Member } from "eris";
 
 export default class TestCommand extends Command {
     constructor(client: AlunaClient) {

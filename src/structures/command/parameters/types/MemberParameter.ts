@@ -1,6 +1,5 @@
 import { CommandContext } from "../.."
-import user from "./UserParameter"
-import { UserInterface } from "./UserParameter"
+import user, { UserInterface } from "./UserParameter"
 
 export default function member(options: UserInterface): UserInterface {
     return {
