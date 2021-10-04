@@ -1,7 +1,8 @@
-import AlunaClient from "../../AlunaClient";
+import AlunaClient from "@/AlunaClient";
 import CommandContext from "./CommandContext";
 import CommandRequirements, { _CommandRequirements } from "./CommandRequirements";
 import CommandParameters from "./parameters/CommandParameters";
+import { ParameterInterface } from "./parameters/types/Parameter";
 
 export default class Command {
     public client: AlunaClient;
@@ -37,7 +38,7 @@ export default class Command {
 interface CommandOptions {
     labels: string[];
     requirements?: _CommandRequirements
-    parameters?: CommandParametersInterface[]
+    parameters?: ParameterInterface[]
 }
 
 export interface CommandParametersInterface {
@@ -45,5 +46,5 @@ export interface CommandParametersInterface {
     type: "string" | "number" | "user" | "member";
     errorMessage: string
     required?: boolean;
-    [value: string]: any
+    // [value: string]: any
 }

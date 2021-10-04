@@ -22,7 +22,9 @@ export default class MessageListener {
 
         let command = this.client.commandManager.get(commandName)
         if (!command) return;
+
         let context = new CommandContext(this.client, {
+            command,
             message,
             args,
             author: message.author,

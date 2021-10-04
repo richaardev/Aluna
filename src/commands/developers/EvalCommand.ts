@@ -1,6 +1,7 @@
 import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
 import util from "util";
+import string from "../../structures/command/parameters/types/StringParameter";
 
 export default class EvalCommand extends Command {
     constructor(client: AlunaClient) {
@@ -10,11 +11,10 @@ export default class EvalCommand extends Command {
                 devOnly: true
             },
             parameters: [
-                {
-                    type: "string",
-                    errorMessage: "Ae bro, cade o conteudo???",
+                string({
+                    errorMessage: "Falta o code bro '-'",
                     full: true
-                }
+                })
             ]
         })
     }

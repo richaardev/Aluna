@@ -1,7 +1,7 @@
-import string from "./string"
-import number from "./number"
-import user from "./user"
-import member from "./member"
+import string from "./StringParameter"
+import number from "./NumberParameter"
+import user from "./UserParameter"
+import member from "./MemberParameter"
 
 export default {
     string,

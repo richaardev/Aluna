@@ -2,8 +2,8 @@
 	"Create Command": {
         "prefix": "cmd",
         "body": [
-			"import AlunaClient from \"../../AlunaClient\";",
-			"import { Command, CommandContext } from \"../../structures/command\";",
+			"import AlunaClient from \"@/AlunaClient\";",
+			"import { Command, CommandContext } from \"@/structures/command\";",
             "",
             "export default class ${TM_FILENAME_BASE} extends Command {",
             "    constructor(client: AlunaClient) {",
