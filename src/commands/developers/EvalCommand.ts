@@ -1,6 +1,6 @@
-import AlunaClient from "@/AlunaClient";
-import { Command, CommandContext } from "@/structures/command";
-import string from "@/structures/command/parameters/types/StringParameter";
+import AlunaClient from "../../AlunaClient";
+import { Command, CommandContext } from "../../structures/command";
+import string from "../../structures/command/parameters/types/StringParameter";
 import util from "util";
 
 export default class EvalCommand extends Command {

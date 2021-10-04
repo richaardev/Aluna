@@ -1,6 +1,6 @@
-import PermissionUtils from "@/utils/PermissionsUtils";
 import { Constants } from "eris";
 import { CommandContext } from ".";
+import PermissionUtils from "../../utils/PermissionsUtils";
 
 export interface _CommandRequirements {
     botPermission?: (keyof Constants["Permissions"])[] | null

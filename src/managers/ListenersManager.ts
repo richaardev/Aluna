@@ -1,7 +1,7 @@
-import Manager from "@/structures/Manager" // que?
-import Logger from "@/utils/Logger"
 import { readdirSync } from "fs"
 import path from "path"
+import Manager from "../structures/Manager" // que?
+import Logger from "../utils/Logger"
 
 export default class EventsManager extends Manager<string, any> {
     _load() {

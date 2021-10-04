@@ -1,6 +1,6 @@
-import AlunaClient from "@/AlunaClient";
-import { CommandContext } from "@/structures/command";
 import { Message } from "eris";
+import AlunaClient from "../AlunaClient";
+import { CommandContext } from "../structures/command";
 
 export default class MessageListener {
     public client: AlunaClient

@@ -1,4 +1,4 @@
-import AlunaClient from "@/AlunaClient";
+import AlunaClient from "../../AlunaClient";
 import CommandContext from "./CommandContext";
 import CommandRequirements, { _CommandRequirements } from "./CommandRequirements";
 import CommandParameters from "./parameters/CommandParameters";
@@ -29,7 +29,8 @@ export default class Command {
             ctx.channel.createMessage(err.message)
             return;
         }
-
+        
+        args ??= []
         this.execute(ctx, ...args)
     }
 }
@@ -39,6 +40,7 @@ interface CommandOptions {
     labels: string[];
     requirements?: _CommandRequirements
     parameters?: ParameterInterface[]
+    category?: string
 }
 
 export interface CommandParametersInterface {
