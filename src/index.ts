@@ -2,9 +2,10 @@ import AlunaClient from './AlunaClient'
 import * as dotenv from "dotenv";
 dotenv.config()
 
-let client = new AlunaClient(process.env.TOKEN!, {
+
+let client = new AlunaClient({
     intents: 32767,
-    restMode: true
+    shards: "auto",
 });
 
-client.connect()
+client.login(process.env.TOKEN!)

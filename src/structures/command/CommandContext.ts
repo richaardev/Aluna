@@ -1,7 +1,6 @@
-import { AdvancedMessageContent, Guild, Message, MessageContent, MessageFile, TextChannel, User } from "eris";
-import { createContext } from "vm";
-import { Command } from ".";
+import { Guild, Message, MessageOptions, MessagePayload, TextChannel, User } from "discord.js";
 import AlunaClient from "../../AlunaClient";
+import { Command } from ".";
 
 export default class CommandContext {
     public client: AlunaClient;
@@ -22,18 +21,7 @@ export default class CommandContext {
         this.args = options.args;
     }
 
-    reply (_content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<TextChannel>> {
-        let u = (typeof _content === "string") ? _content : _content.content
-        let content: AdvancedMessageContent = {
-            content: u,
-            messageReference: {
-                messageID: this._message.id,
-            },
-            allowedMentions: {
-                repliedUser: true
-            }
-        }
-        if (typeof _content === "object") Object.assign(content, _content)
-        return this.channel.createMessage(content, file)
+    reply (options: string | MessagePayload | MessageOptions): Promise<Message>{
+        return this._message.reply(options)
     }
 }

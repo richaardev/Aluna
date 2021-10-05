@@ -1,8 +1,8 @@
-import AlunaClient from "../../AlunaClient";
-import CommandContext from "./CommandContext";
 import CommandRequirements, { _CommandRequirements } from "./CommandRequirements";
-import CommandParameters from "./parameters/CommandParameters";
 import { ParameterInterface } from "./parameters/types/Parameter";
+import CommandParameters from "./parameters/CommandParameters";
+import CommandContext from "./CommandContext";
+import AlunaClient from "../../AlunaClient";
 
 export default class Command {
     public client: AlunaClient;
@@ -18,7 +18,7 @@ export default class Command {
         try {
             CommandRequirements.handle(ctx, this.options.requirements)
         } catch (err: any) {
-            ctx.channel.createMessage(err.message)
+            ctx.reply(err.message)
             return;
         }
 
@@ -26,7 +26,7 @@ export default class Command {
         try {
             args = CommandParameters.handle(ctx, ctx.args, this.options.parameters)!
         } catch (err: any) {
-            ctx.channel.createMessage(err.message)
+            ctx.reply(err.message)
             return;
         }
         
@@ -38,9 +38,11 @@ export default class Command {
 
 interface CommandOptions {
     labels: string[];
-    requirements?: _CommandRequirements
-    parameters?: ParameterInterface[]
-    category?: string
+    description?: string;
+
+    requirements?: _CommandRequirements;
+    parameters?: ParameterInterface[];
+    category?: string;
 }
 
 export interface CommandParametersInterface {

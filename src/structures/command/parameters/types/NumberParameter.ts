@@ -1,5 +1,5 @@
-import { CommandContext } from "../..";
 import { ParameterInterface } from "./Parameter";
+import { CommandContext } from "../..";
 
 export default function number(options: NumberInterface): NumberInterface {
     return {

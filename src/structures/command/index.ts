@@ -1,11 +1,11 @@
-import Command from "./Command";
-import CommandContext from "./CommandContext";
 import CommandParameters from "./parameters/CommandParameters";
 import CommandRequirements from "./CommandRequirements";
+import CommandContext from "./CommandContext";
+import Command from "./Command";
 
 export {
-    Command, 
-    CommandContext,
-    CommandParameters,
     CommandRequirements,
+    CommandParameters,
+    CommandContext,
+    Command, 
 }

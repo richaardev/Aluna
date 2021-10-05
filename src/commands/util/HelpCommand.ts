@@ -1,6 +1,6 @@
-import { Embed } from "eris";
-import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
+import AlunaClient from "../../AlunaClient";
+import { MessageEmbed } from "discord.js";
 
 export default class HelpCommand extends Command {
     constructor(client: AlunaClient) {
@@ -10,29 +10,14 @@ export default class HelpCommand extends Command {
         });
     }
     async execute(ctx: CommandContext) {
-        let embed: Embed = {
-            type: "rich",
-            author: {
-                name: ctx.author.username,
-                icon_url: ctx.author.avatarURL
-            },
-            thumbnail: {
-                url: this.client.user.avatarURL
-            },
-            description: "",
-            fields: [
-                {
-                    name: "Utilidades",
-                    value: this.mapCommands("util")
-                },
-                {
-                    name: "Moderação",
-                    value: this.mapCommands("moderation")
-                }
-            ],
-            color: Math.floor(Math.random() * 999999)
-        }
-        ctx.channel.createMessage({
+        let embed = new MessageEmbed()
+            .setAuthor(ctx.author.username, ctx.author.displayAvatarURL())
+            .setThumbnail(this.client.user?.displayAvatarURL()!)
+            .addField("Utilidades", this.mapCommands("util"))
+            .addField("Moderação", this.mapCommands("moderation"))
+            .setColor("RANDOM")
+
+        ctx.reply({
             embeds: [embed]
         })
     }

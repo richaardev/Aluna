@@ -1,8 +1,8 @@
-import { Member } from "eris";
 import member from "structures/command/parameters/types/MemberParameter";
 import string from "structures/command/parameters/types/StringParameter";
-import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
+import AlunaClient from "../../AlunaClient";
+import { GuildMember } from "discord.js";
 
 export default class KickCommand extends Command {
     constructor(client: AlunaClient) {
@@ -21,10 +21,10 @@ export default class KickCommand extends Command {
             ]
         });
     }
-    async execute(ctx: CommandContext, user: Member, reason: string) {
+    async execute(ctx: CommandContext, user: GuildMember, reason: string) {
         await user
                 .kick(`Expulso por ${ctx.author.username}`)
-                .then(() => ctx.channel.createMessage("O usuário foi expulso com sucesso!"))
-                .catch(err => ctx.channel.createMessage("Não foi possivel expulsar o usuário..."))
+                .then(() => ctx.reply("O usuário foi expulso com sucesso!"))
+                .catch(() => ctx.reply("Não foi possivel expulsar o usuário..."))
     }
 }

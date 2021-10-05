@@ -1,6 +1,6 @@
-import AlunaClient from "../../AlunaClient";
-import { Command, CommandContext } from "../../structures/command";
 import string from "../../structures/command/parameters/types/StringParameter";
+import { Command, CommandContext } from "../../structures/command";
+import AlunaClient from "../../AlunaClient";
 import util from "util";
 
 export default class EvalCommand extends Command {
@@ -32,9 +32,9 @@ export default class EvalCommand extends Command {
             );
             if (evaled.length > 1900) evaled = `${evaled.slice(0, 1800)}...`;
             evaled = `\`\`\`js\n${evaled}\`\`\``;
-            await ctx.channel.createMessage(evaled);
+            await ctx.reply(evaled);
         } catch (err) {
-            await ctx.channel.createMessage(
+            await ctx.reply(
                 `\`\`\`js\n${util.inspect(err, { depth: 1 })}\`\`\``
             );
         }

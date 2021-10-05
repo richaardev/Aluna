@@ -1,5 +1,5 @@
-import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
+import AlunaClient from "../../AlunaClient";
 
 export default class PingCommand extends Command {
     constructor(client: AlunaClient) {
@@ -9,6 +9,6 @@ export default class PingCommand extends Command {
         });
     }
     async execute(ctx: CommandContext) {
-        ctx.reply(`Pong! \`${ctx.guild?.shard.latency}\`ms`)
+        ctx.reply(`Pong! \`${this.client.ws.ping}\`ms`)
     }
 }

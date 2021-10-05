@@ -1,7 +1,7 @@
-import { User } from "eris";
-import AlunaClient from "../../AlunaClient";
-import { Command, CommandContext } from "../../structures/command";
 import user from "../../structures/command/parameters/types/UserParameter";
+import { Command, CommandContext } from "../../structures/command";
+import AlunaClient from "../../AlunaClient";
+import { User } from "discord.js";
 
 export default class TestCommand extends Command {
     constructor(client: AlunaClient) {
@@ -19,7 +19,7 @@ export default class TestCommand extends Command {
         });
     }
     async execute(ctx: CommandContext, user: User) {
-        if (!user) return ctx.channel.createMessage("ninguem")
-        ctx.channel.createMessage(`${user.username}`)
+        if (!user) return ctx.reply("ninguem")
+        ctx.reply(`${user.username}`)
     }
 }

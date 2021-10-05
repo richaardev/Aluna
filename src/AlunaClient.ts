@@ -1,15 +1,15 @@
-import { Client, ClientOptions } from "eris";
-import CommandManager from "./managers/CommandManager";
 import ListenersManager from "./managers/ListenersManager";
+import CommandManager from "./managers/CommandManager";
+import { Client, ClientOptions } from "discord.js";
+
 export default class AlunaClient extends Client {
-    public commandManager: CommandManager;
     public listenerManager: ListenersManager;
+    public commandManager: CommandManager;
 
-    constructor (token: string, options: ClientOptions) {
-        super(token, options); 
+    constructor (options: ClientOptions) {
+        super(options); 
 
-        this.commandManager = new CommandManager(this)
         this.listenerManager = new ListenersManager(this)
-
+        this.commandManager = new CommandManager(this)
     }
 }

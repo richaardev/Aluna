@@ -1,10 +1,11 @@
-import { Constants } from "eris";
-import { CommandContext } from ".";
 import PermissionUtils from "../../utils/PermissionsUtils";
+import { PermissionString } from "discord.js";
+import { CommandContext } from ".";
+
 
 export interface _CommandRequirements {
-    botPermission?: (keyof Constants["Permissions"])[] | null
-    permissions?: (keyof Constants["Permissions"])[] | null
+    botPermission?: PermissionString[] | null
+    permissions?: PermissionString[] | null
 
     devOnly?: boolean | null
 }

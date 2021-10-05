@@ -1,5 +1,5 @@
-import { CommandContext } from "../.."
 import user, { UserInterface } from "./UserParameter"
+import { CommandContext } from "../.."
 
 export default function member(options: UserInterface): UserInterface {
     return {
@@ -11,7 +11,7 @@ export default function member(options: UserInterface): UserInterface {
             let u = opt.parse!(ctx, argument, opt)
             
             if (!u && !opt.required) return null
-            let member = ctx.guild?.members.get(u?.id)
+            let member = ctx.guild?.members.cache.get(u?.id)
             if (!member) throw new Error("Não foi possivel encontrar esse membro no servidor!")
             return member
         }

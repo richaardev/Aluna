@@ -1,6 +1,4 @@
-import { Constants, Member, TextChannel, User } from "eris";
-
-
+import { GuildMember, PermissionString, TextChannel, User } from "discord.js";
 
 export default class PermissionUtils {
     static isDeveloper(author: User) {
@@ -14,12 +12,9 @@ export default class PermissionUtils {
     /** 
      * * Isso é uma forma que eu fiz para verificar se o usuario tem todas as permissões exigidas no "@param permissions"
     */
-    static hasPermissions(permissions: (keyof Constants["Permissions"])[], member: Member, channel: TextChannel) {
-        let Permissions = Constants["Permissions"]
-        let perms = channel.permissionsOf(member.id);
-        let allPerms = Object.keys(perms.json);
+    static hasPermissions(permissions: PermissionString[], member: GuildMember, channel: TextChannel) {
         for (let i of permissions) {
-            if (allPerms.includes(i)) continue;
+            if (member.permissions.has(i)) continue;
             else return false;
         }
         return true;

@@ -1,5 +1,5 @@
-import { CommandContext } from "../..";
 import { ParameterInterface } from "./Parameter";
+import { CommandContext } from "../..";
 
 export default function user(options: UserInterface): UserInterface {
     return {
@@ -18,9 +18,9 @@ export default function user(options: UserInterface): UserInterface {
 
             argument = argument!.replace(/[<>@!]/g, "");
             const findMember = argument
-                ? ctx.guild?.members.find(m => m.user.username.toLowerCase().includes(argument!)) : null
+                ? ctx.guild?.members.cache.find(m => m.user.username.toLowerCase().includes(argument!)) : null
 
-            const user = ctx.client.users.get(argument) || (!!findMember && findMember.user)
+            const user = ctx.client.users.cache.get(argument) || (!!findMember && findMember.user)
             if (!user && !options.required) return null
             if (!user) throw new Error("Desculpe, mas não foi possivel encontrar esse usuário")
             if (options.denyBot) throw new Error("Desculpe, mas você só pode mencionar `usuários` válidos!")

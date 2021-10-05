@@ -1,6 +1,7 @@
+import Collection from "@discordjs/collection";
 import AlunaClient from "../AlunaClient";
 
-export default class Manager<K, V> extends Map<K, V> {
+export default class Manager<K, V> extends Collection<K, V> {
     public client: AlunaClient;
     constructor(client: AlunaClient) {
         super();

@@ -1,8 +1,8 @@
-import { Member } from "eris";
 import member from "structures/command/parameters/types/MemberParameter";
 import string from "structures/command/parameters/types/StringParameter";
-import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
+import AlunaClient from "../../AlunaClient";
+import { GuildMember } from "discord.js";
 
 export default class BanCommand extends Command {
     constructor(client: AlunaClient) {
@@ -21,10 +21,13 @@ export default class BanCommand extends Command {
             ]
         });
     }
-    async execute(ctx: CommandContext, user: Member, reason: string) {
+    async execute(ctx: CommandContext, user: GuildMember, reason: string) {
         await user
-                .ban(7, `Banido por ${ctx.author.username}`)
-                .then(() => ctx.channel.createMessage("O usuário foi banido com sucesso!"))
-                .catch(err => ctx.channel.createMessage("Não foi possivel banir o usuário..."))
+                .ban({
+                    days: 7,
+                    reason: `Banido por ${ctx.author.username}`
+                })
+                .then(() => ctx.reply("O usuário foi banido com sucesso!"))
+                .catch(err => ctx.reply("Não foi possivel banir o usuário..."))
     }
 }

@@ -1,5 +1,5 @@
-import { CommandContext } from "../..";
 import { ParameterInterface } from "./Parameter";
+import { CommandContext } from "../..";
 
 export default function string(options: StringInterface): StringInterface {
     return {

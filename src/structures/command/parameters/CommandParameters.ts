@@ -1,5 +1,5 @@
-import { CommandContext } from "..";
 import { ParameterInterface } from "./types/Parameter";
+import { CommandContext } from "..";
 
 export default class CommandParameters {
     static handle(ctx: CommandContext, args: string[], paramArray?: ParameterInterface[]) {
