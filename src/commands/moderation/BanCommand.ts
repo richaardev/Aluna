@@ -28,6 +28,6 @@ export default class BanCommand extends Command {
                     reason: `Banido por ${ctx.author.username}`
                 })
                 .then(() => ctx.reply("O usuário foi banido com sucesso!"))
-                .catch(err => ctx.reply("Não foi possivel banir o usuário..."))
+                .catch(() => ctx.reply("Não foi possivel banir o usuário..."))
     }
 }
