@@ -10,11 +10,11 @@ export default class CommandParameters {
                 let arg = args[i];
                 if (param.full) arg = args.slice(i).join(" ");
 
-                if (!arg && param.required) throw new Error(param.errorMessage)
+                if (!arg && param.required) throw new Error(param.errorMessage);
                 let parsed = param.parse!(ctx, arg, param);
                 result.push(parsed);
             }
             return result;
         }
     }
-};
+}

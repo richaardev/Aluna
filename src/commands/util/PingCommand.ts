@@ -5,10 +5,10 @@ export default class PingCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["ping"],
-            requirements: {}
+            requirements: {},
         });
     }
     async execute(ctx: CommandContext) {
-        ctx.reply(`Pong! \`${this.client.ws.ping}\`ms`)
+        ctx.reply(`Pong! \`${this.client.ws.ping}\`ms`);
     }
 }

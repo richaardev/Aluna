@@ -9,9 +9,9 @@ export default class PermissionUtils {
         return false;
     }
 
-    /** 
+    /**
      * * Isso é uma forma que eu fiz para verificar se o usuario tem todas as permissões exigidas no "@param permissions"
-    */
+     */
     static hasPermissions(permissions: PermissionString[], member: GuildMember, channel: TextChannel) {
         for (let i of permissions) {
             if (member.permissions.has(i)) continue;

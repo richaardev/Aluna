@@ -3,27 +3,19 @@ import moment from "moment";
 
 export default class Logger {
     static get currentTime() {
-        return `${yellow(
-            moment(Date.now()).format("[[]DD/MM/YYYY hh:mm:ss[]]")
-        )}`
+        return `${yellow(moment(Date.now()).format("[[]DD/MM/YYYY hh:mm:ss[]]"))}`;
     }
 
     static generateLog(logType: string, message: any) {
-        console.log(`${this.currentTime} ${logType}: ${message}`)
+        console.log(`${this.currentTime} ${logType}: ${message}`);
     }
 
     static warn(message: any): void {
-        this.generateLog(
-            bgYellowBright(black("[WARN]")),
-            yellowBright(message)
-        )
+        this.generateLog(bgYellowBright(black("[WARN]")), yellowBright(message));
     }
 
     static error(message: any, isFatal?: boolean) {
-        this.generateLog(
-            bgRed(black(isFatal ? "[FATAL ERROR]" : "[ERROR]")),
-            red(message)
-        );
+        this.generateLog(bgRed(black(isFatal ? "[FATAL ERROR]" : "[ERROR]")), red(message));
     }
 
     static debug(message: any) {

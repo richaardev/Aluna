@@ -16,25 +16,28 @@ export default class Command {
 
     async _execute(ctx: CommandContext) {
         try {
-            CommandRequirements.handle(ctx, this.options.requirements)
+            CommandRequirements.handle(ctx, this.options.requirements);
         } catch (err: any) {
-            ctx.reply(err.message)
+            ctx.reply(err.message);
             return;
         }
 
         let args: any[];
         try {
-            args = CommandParameters.handle(ctx, ctx.args, this.options.parameters)!
+            args = CommandParameters.handle(ctx, ctx.args, this.options.parameters)!;
         } catch (err: any) {
-            ctx.reply(err.message)
+            ctx.reply(err.message);
             return;
         }
-        
-        args ??= []
-        this.execute(ctx, ...args)
+        try {
+            args ??= [];
+            this.execute(ctx, ...args);
+        } catch (err: any) {
+            ctx.reply(err.message);
+            return;
+        }
     }
 }
-
 
 interface CommandOptions {
     labels: string[];
@@ -43,12 +46,14 @@ interface CommandOptions {
     requirements?: _CommandRequirements;
     parameters?: ParameterInterface[];
     category?: string;
+
+    dir?: string;
 }
 
 export interface CommandParametersInterface {
     full?: boolean;
     type: "string" | "number" | "user" | "member";
-    errorMessage: string
+    errorMessage: string;
     required?: boolean;
     // [value: string]: any
 }

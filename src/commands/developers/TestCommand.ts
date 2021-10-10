@@ -13,13 +13,13 @@ export default class TestCommand extends Command {
             parameters: [
                 user({
                     errorMessage: "Bruh",
-                    required: false
-                })
-            ]
+                    required: false,
+                }),
+            ],
         });
     }
     async execute(ctx: CommandContext, user: User) {
-        if (!user) return ctx.reply("ninguem")
-        ctx.reply(`${user.username}`)
+        if (!user) return ctx.reply("ninguem");
+        ctx.reply(`${user.username}`);
     }
 }

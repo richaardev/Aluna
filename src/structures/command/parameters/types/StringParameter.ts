@@ -7,12 +7,12 @@ export default function string(options: StringInterface): StringInterface {
         required: options.required ?? true,
 
         parse(ctx: CommandContext, argument: string | undefined, opt: StringInterface) {
-            argument = argument ? (typeof argument === 'string' ? argument : argument as string) : undefined
-            if (opt.required && !argument) throw new Error(opt.errorMessage)
+            argument = argument ? (typeof argument === "string" ? argument : (argument as string)) : undefined;
+            if (opt.required && !argument) throw new Error(opt.errorMessage);
 
             return argument;
-        }
-    }
+        },
+    };
 }
 
 interface StringInterface extends ParameterInterface {}

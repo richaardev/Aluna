@@ -6,8 +6,8 @@ export default class Manager<K, V> extends Collection<K, V> {
     constructor(client: AlunaClient) {
         super();
         this.client = client;
-        this._load = this._load.bind(this)
-        this._load()
+        this._load = this._load.bind(this);
+        this._load();
     }
     _load() {}
 }

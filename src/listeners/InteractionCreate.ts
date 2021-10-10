@@ -2,18 +2,18 @@ import { Interaction } from "discord.js";
 import AlunaClient from "../AlunaClient";
 import { CommandContext } from "../structures/command";
 
-export default class Ready {
-    public client: AlunaClient
-    public name: string
+export default class InteractionCreate {
+    public client: AlunaClient;
+    public name: string;
     constructor(client: AlunaClient) {
-        this.client = client
-        this.name = "interactionCreate"
+        this.client = client;
+        this.name = "interactionCreate";
     }
 
     run(interaction: Interaction): void {
         if (interaction.isCommand()) {
-            let command = this.client.commandManager.get(interaction.commandName)
-            
+            let command = this.client.commandManager.get(interaction.commandName);
+
             let context = new CommandContext(this.client, {
                 command,
                 args: [],
@@ -21,10 +21,10 @@ export default class Ready {
                 channel: interaction.channel,
                 guild: interaction.guild,
                 isInteraction: true,
-                message: interaction
-            })
+                message: interaction,
+            });
 
-            command?._execute(context)
+            command?._execute(context);
         }
     }
 }
