@@ -13,6 +13,6 @@ export default class SkipCommand extends Command {
     }
     async execute(ctx: CommandContext) {
         ctx.guildPlayer!.stop();
-        ctx.reply("A musica foi pulada com sucesso!");
+        ctx.beautifulReply("⏩", "A musica foi pulada com sucesso!");
     }
 }

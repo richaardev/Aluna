@@ -20,6 +20,6 @@ export default class VolumeCommand extends Command {
     }
     async execute(ctx: CommandContext, volume: number) {
         ctx.guildPlayer!.volume(volume);
-        ctx.reply(`O volume da musica foi alterado para \`${volume}\``);
+        ctx.beautifulReply("🔊", `O volume da musica foi alterado para \`${volume}\``);
     }
 }

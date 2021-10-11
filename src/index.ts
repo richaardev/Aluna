@@ -2,8 +2,8 @@ import * as dotenv from "dotenv";
 import AlunaClient from "./AlunaClient";
 import Logger from "./utils/Logger";
 dotenv.config();
-import("./utils/Prototypes")
-import("moment-duration-format")
+import("./utils/Prototypes");
+import("moment-duration-format");
 
 Logger.info("Starting...");
 let client = new AlunaClient({

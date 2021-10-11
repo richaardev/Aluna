@@ -14,10 +14,10 @@ export default class PauseCommand extends Command {
     }
     async execute(ctx: CommandContext) {
         if (ctx.guildPlayer!.paused) {
-            ctx.reply(`${Emojis.error} A musica já está pausada!`);
+            ctx.beautifulReply(`${Emojis.error}`, `A musica já está pausada!`);
         } else {
             ctx.guildPlayer!.pause(true);
-            ctx.reply(`${Emojis.pausa} A musica foi pausada com sucesso!`);
+            ctx.beautifulReply("▶️", `A musica foi pausada com sucesso!`);
         }
     }
 }

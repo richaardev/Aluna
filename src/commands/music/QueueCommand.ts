@@ -13,7 +13,7 @@ export default class QueueCommand extends Command {
         });
     }
     async execute(ctx: CommandContext) {
-        let songs = ctx.guildPlayer!.queue.songs.map((song, i) => `**${i}.** \`${song.title} ${song.duration}\` - <@!${song.requestedBy}>`).join("\n");
+        let songs = ctx.guildPlayer!.queue.songs.map((song, i) => `**${i}.** \`${song.title} ${song.time}\` - <@!${song.requestedBy}>`).join("\n");
         if (songs === "" || !songs) songs = "**Nenhuma musica na fila!**";
         songs = `**Tocando agora: \`${ctx.guildPlayer?.queue.nowPlaying?.title}\` - <@!${ctx.guildPlayer?.queue.nowPlaying?.requestedBy}>** \n\n${songs}`;
         let embed = new AlunaEmbed().setDescription(songs);

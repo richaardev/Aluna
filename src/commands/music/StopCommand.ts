@@ -1,3 +1,4 @@
+import { Message } from "discord.js";
 import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
 
@@ -13,5 +14,6 @@ export default class StopCommand extends Command {
     }
     async execute(ctx: CommandContext) {
         ctx.guildPlayer?.stop();
+        if (ctx.message instanceof Message) ctx.message.react("⏹️");
     }
 }

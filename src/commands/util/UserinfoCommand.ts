@@ -22,7 +22,17 @@ export default class UserinfoCommand extends Command {
         let embed = new MessageEmbed()
             .setAuthor(member.user.username, member.displayAvatarURL({ dynamic: true }))
             .addField("> Informações básicas", `- Tag: **${member.user.tag}**\n- ID: **${member.id}**\n- Conta criada há: **${calcDate(new Date(), member.user.createdAt).days} dias**\n- Entrou no servidor faz: **${calcDate(new Date(), member.joinedAt!).days} dias**`)
-            .addField("> Informações adicionais", `- Apelido: **${member.nickname == null ? "nenhum apelido." : member.nickname}**\n- Status: **${checkStatus(member)}**\n- Cargos: ${!member.roles ? 'Nenhum cargo' : `${member.roles.cache.map(role => `<@&${role.id}>`).slice(0, -1).join(" ")}`}`);
+            .addField(
+                "> Informações adicionais",
+                `- Apelido: **${member.nickname == null ? "nenhum apelido." : member.nickname}**\n- Status: **${checkStatus(member)}**\n- Cargos: ${
+                    !member.roles
+                        ? "Nenhum cargo"
+                        : `${member.roles.cache
+                              .map((role) => `<@&${role.id}>`)
+                              .slice(0, -1)
+                              .join(" ")}`
+                }`,
+            );
         ctx.reply({ embeds: [embed] });
 
         function calcDate(date1: Date, date2: Date) {

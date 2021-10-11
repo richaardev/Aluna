@@ -36,6 +36,6 @@ export default class BassBoostCommand extends Command {
         // @ts-ignore
         let r = allowed[type.toLowerCase()];
         ctx.guildPlayer!.setBassboost(r);
-        ctx.beautifulReply("", `O bassboost foi alterado para \`${type}\``);
+        ctx.beautifulReply("🔊", `O bassboost foi alterado para \`${type}\``);
     }
 }

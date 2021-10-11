@@ -30,7 +30,7 @@ export default class Queue {
     }
     get currentTime() {
         return moment.duration(this.player.state.position).format(`${this.player.state.position! >= 3600000 ? "hh:" : ""}mm:ss`, {
-            trim: false
+            trim: false,
         });
     }
     playNext() {

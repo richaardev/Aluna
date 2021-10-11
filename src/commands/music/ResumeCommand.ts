@@ -1,3 +1,4 @@
+import Emojis from "../../utils/Emojis";
 import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
 
@@ -14,9 +15,9 @@ export default class ResumeCommand extends Command {
     async execute(ctx: CommandContext) {
         if (ctx.guildPlayer!.paused) {
             ctx.guildPlayer?.resume();
-            ctx.reply("A musica está sendo continuada!");
+            ctx.beautifulReply("⏸️", "A musica está sendo continuada!");
         } else {
-            ctx.reply("A musica já está tocando!");
+            ctx.beautifulReply(Emojis.error, "A musica já está tocando!");
         }
     }
 }

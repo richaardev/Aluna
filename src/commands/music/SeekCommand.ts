@@ -19,6 +19,6 @@ export default class SeekCommand extends Command {
     }
     async execute(ctx: CommandContext, time: number) {
         ctx.guildPlayer?.seek(time);
-        ctx.reply(`O tempo da musica foi alterado para \`${~~(time / 1000)} segundos\``);
+        ctx.beautifulReply("⏰", `O tempo da musica foi alterado para \`${~~(time / 1000)} segundos\``);
     }
 }
