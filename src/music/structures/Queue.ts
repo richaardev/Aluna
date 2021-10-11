@@ -29,7 +29,9 @@ export default class Queue {
         return !isEmpty(this.songs);
     }
     get currentTime() {
-        return moment(this.player.state.position).format("mm:ss");
+        return moment.duration(this.player.state.position).format(`${this.player.state.position! >= 3600000 ? "hh:" : ""}mm:ss`, {
+            trim: false
+        });
     }
     playNext() {
         let song = this.songs.shift();

@@ -27,8 +27,8 @@ export default class Song {
         this.uri = track.info.uri;
     }
 
-    get duration() {
+    get time() {
         if (this.isStream) return "∞";
-        return moment(this.length).format("mm:ss");
+        return moment.duration(this.length).format(`hh:mm:ss`);
     }
 }

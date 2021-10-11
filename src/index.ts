@@ -1,8 +1,9 @@
-import AlunaClient from "./AlunaClient";
 import * as dotenv from "dotenv";
-import { MessageMentions } from "discord.js";
+import AlunaClient from "./AlunaClient";
 import Logger from "./utils/Logger";
 dotenv.config();
+import("./utils/Prototypes")
+import("moment-duration-format")
 
 Logger.info("Starting...");
 let client = new AlunaClient({

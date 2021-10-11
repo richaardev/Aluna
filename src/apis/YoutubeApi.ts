@@ -9,7 +9,7 @@ export default class YoutubeApi extends ApiWrapper {
     getBestThumbnail(thumbnails: api.youtube_v3.Schema$ThumbnailDetails): string {
         if (!thumbnails) return "";
         const { high, maxres, medium, standard } = thumbnails;
-        return maxres?.url || high?.url || medium?.url || standard?.url || thumbnails.default?.url!;
+        return maxres?.url || medium?.url || high?.url || standard?.url || thumbnails.default?.url!;
     }
 
     get youtube() {

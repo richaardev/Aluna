@@ -28,15 +28,14 @@ export default class PlayCommand extends Command {
                 ctx.guildPlayer?._play(song);
                 let youtube = this.client.apis.youtube;
                 youtube.getVideoInfo(song.identifier).then((video) => {
-                    let { abbreviateNumber } = this.client.utils;
                     let embed = new AlunaEmbed()
                         .setThumbnail(youtube.getBestThumbnail(video.snippet?.thumbnails!)!)
                         .setTitle("**Musica adicionada na fila**")
                         .addField(":tv: Nome", `\`${song.title}\``)
-                        .addField("⏰ Duração", `\`${song.duration}\``, true)
-                        .addField(":+1: Likes", `\`${abbreviateNumber(video.statistics?.likeCount || 0)}\``, true)
-                        .addField(":-1: Deslikes", `\`${abbreviateNumber(video.statistics?.dislikeCount || 0)}\``, true)
-                        .addField(":tv: Visualizações", `\`${abbreviateNumber(video.statistics?.viewCount || 0)}\``, true);
+                        .addField("⏰ Duração", `\`${song.time}\``, true)
+                        .addField(":+1: Likes", `\`${video.statistics?.likeCount?.abbreviate()}\``, true)
+                        .addField(":-1: Deslikes", `\`${video.statistics?.dislikeCount?.abbreviate()}\``, true)
+                        .addField(":tv: Visualizações", `\`${video.statistics?.viewCount?.abbreviate()}\``, true);
 
                     ctx.reply({
                         embeds: [embed],
