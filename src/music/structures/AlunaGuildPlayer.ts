@@ -5,15 +5,16 @@ import Song from "./Song";
 export default class AlunaGuildPlayer extends Player {
     public readonly queue: Queue;
     public bassboost: boolean;
-    public _volume: number;
+    public loop: boolean;
 
     constructor(node: LavalinkNode, id: string) {
         super(node, id);
 
         this.queue = new Queue(this);
         this.bassboost = false;
-        this._volume = 50;
+        this.loop = false;
     }
+
     loadTracks(songName: string, provider = "ytsearch:"): Promise<TrackResponse> {
         return Rest.load(this.node, `${provider}${songName}`);
     }
@@ -31,7 +32,7 @@ export default class AlunaGuildPlayer extends Player {
         }
 
         this.queue.play(song);
-        this.volume(this._volume);
+        this.volume(50);
     }
 
     setBassboost(gain: number) {

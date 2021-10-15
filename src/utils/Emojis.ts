@@ -1,6 +1,6 @@
 enum Emojis {
-    success = "<:success:896580446954082315>",
-    error = "<:error:896579972557312031>",
+    success = "<:SucessMessage:897291659044356116>",
+    error = "<:ErrorMessage:897291585161670738>",
     play = "<:play:896590068540661801>",
     pausa = "<:pausa:896590396333891634>",
 }

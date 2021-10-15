@@ -1,5 +1,5 @@
 import { Manager, ManagerOptions } from "@lavacord/discord.js";
-import AlunaClient from "AlunaClient";
+import AlunaClient from "../AlunaClient";
 import { StageChannel, TextChannel, VoiceChannel } from "discord.js";
 import AlunaGuildPlayer from "./structures/AlunaGuildPlayer";
 const nodes = JSON.parse(process.env.LAVALINK_NODES!);

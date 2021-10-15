@@ -1,6 +1,6 @@
-import string from "../../structures/command/parameters/types/StringParameter";
 import AlunaClient from "../../AlunaClient";
 import { Command, CommandContext } from "../../structures/command";
+import string from "../../structures/command/parameters/types/StringParameter";
 
 export default class ReloadCommand extends Command {
     constructor(client: AlunaClient) {
@@ -9,7 +9,7 @@ export default class ReloadCommand extends Command {
             requirements: {},
             parameters: [
                 string({
-                    errorMessage: "Você precisa indicar um comando válido!",
+                    errorMessage: "você deve específicar um **comando** para ser reiniciado! Tente novamente.",
                 }),
             ],
         });

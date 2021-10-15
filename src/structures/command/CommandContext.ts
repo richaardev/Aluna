@@ -1,8 +1,8 @@
 import { CommandInteraction, Guild, GuildMember, Message, MessageOptions, MessagePayload, TextChannel, User, VoiceState } from "discord.js";
-import AlunaGuildPlayer from "../../music/structures/AlunaGuildPlayer";
-import AlunaEmbed from "../../utils/AlunaEmbed";
+import Emojis from "src/utils/Emojis";
 import { Command } from ".";
 import AlunaClient from "../../AlunaClient";
+import AlunaGuildPlayer from "../../music/structures/AlunaGuildPlayer";
 
 export default class CommandContext {
     public client: AlunaClient;
@@ -11,6 +11,8 @@ export default class CommandContext {
     public message?: Message | CommandInteraction;
     public args: string[];
     public command: Command;
+
+    public emojis: Emojis;
 
     public guild: Guild | undefined;
     public channel: TextChannel;
@@ -28,6 +30,8 @@ export default class CommandContext {
         this.args = options.args;
         this.command = options.command;
 
+        this.emojis = options.Emojis;
+
         this.guild = options.guild;
         this.channel = options.channel;
         this.author = options.author;
@@ -38,7 +42,9 @@ export default class CommandContext {
         this.guildPlayer = (this.client.playerManager?.players.get(this.guild?.id!) as AlunaGuildPlayer) ?? undefined;
     }
 
-    reply(options: string | MessagePayload | MessageOptions): void {
+    reply(options: string | MessagePayload | MessageOptions) {
+        if (typeof options === "string") options = this.replacePlaceholders(options);
+
         if (this.message instanceof CommandInteraction && this.isInteraction) {
             this.message?.reply(options);
             return;
@@ -53,7 +59,11 @@ export default class CommandContext {
 
     beautifulReply(emoji: string, message: string) {
         return this.reply({
-            content: `${emoji} **|** ${message}`,
+            content: `${emoji} **› @${this.author.username}**, ${message}`,
         });
+    }
+
+    private replacePlaceholders(msg: string): string {
+        return msg.replaceAll("{user}", this.author.toString());
     }
 }

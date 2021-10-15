@@ -12,7 +12,7 @@ export default class EvalCommand extends Command {
             },
             parameters: [
                 string({
-                    errorMessage: "Falta o code bro '-'",
+                    errorMessage: "é necessário que informe um código!! Tente novamente.",
                     full: true,
                 }),
             ],

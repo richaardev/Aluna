@@ -1,8 +1,9 @@
-import CommandRequirements, { _CommandRequirements } from "./CommandRequirements";
-import { ParameterInterface } from "./parameters/types/Parameter";
-import CommandParameters from "./parameters/CommandParameters";
-import CommandContext from "./CommandContext";
 import AlunaClient from "../../AlunaClient";
+import CommandContext from "./CommandContext";
+import CommandRequirements, { _CommandRequirements } from "./CommandRequirements";
+import CommandParameters from "./parameters/CommandParameters";
+import Emojis from "src/utils/Emojis";
+import { ParameterInterface } from "./parameters/types/Parameter";
 
 export default class Command {
     public client: AlunaClient;
@@ -18,15 +19,15 @@ export default class Command {
         try {
             CommandRequirements.handle(ctx, this.options.requirements);
         } catch (err: any) {
-            ctx.reply(err.message);
-            return;
+            ctx.beautifulReply(Emojis.error, err.message);
+            return; //vo reiniciar :) pd?
         }
 
         let args: any[];
         try {
             args = CommandParameters.handle(ctx, ctx.args, this.options.parameters)!;
         } catch (err: any) {
-            ctx.reply(err.message);
+            ctx.beautifulReply(Emojis.error, err.message);
             return;
         }
         try {

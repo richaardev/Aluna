@@ -9,6 +9,6 @@ export default class PingCommand extends Command {
         });
     }
     async execute(ctx: CommandContext) {
-        ctx.reply(`Pong! \`${this.client.ws.ping}\`ms`);
+        ctx.reply(`Pong! \`${this.client.ws.ping}\`msssssssssss`);
     }
 }

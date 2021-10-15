@@ -11,18 +11,18 @@ export default class KickCommand extends Command {
             requirements: {},
             parameters: [
                 member({
-                    errorMessage: "Você precisa mencionar um usuário para expulsar!",
+                    errorMessage: "você precisa mencionar um usuário para expulsar!",
                 }),
                 string({
                     full: true,
-                    errorMessage: "Você precisa indicar um motivo da expulsão!",
+                    errorMessage: "você precisa indicar um motivo da expulsão!",
                     required: false,
                 }),
             ],
         });
     }
-    async execute(ctx: CommandContext, user: GuildMember, reason: string) {
-        await user
+    async execute(ctx: CommandContext, member: GuildMember, reason: string) {
+        await member
             .kick(`Expulso por ${ctx.author.username}`)
             .then(() => ctx.reply("O usuário foi expulso com sucesso!"))
             .catch(() => ctx.reply("Não foi possivel expulsar o usuário..."));

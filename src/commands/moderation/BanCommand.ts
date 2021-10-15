@@ -11,11 +11,11 @@ export default class BanCommand extends Command {
             requirements: {},
             parameters: [
                 member({
-                    errorMessage: "Você precisa mencionar um usuário para banir!",
+                    errorMessage: "você deve específicar um **__membro__** antes de banir!! Tente novamente",
                 }),
                 string({
                     full: true,
-                    errorMessage: "Você precisa indicar um motivo do banimento!",
+                    errorMessage: "para realizar o **__banimento__** de um **@usuário** é necessário específicar um `motivo`!! Tente novamente.",
                     required: false,
                 }),
             ],

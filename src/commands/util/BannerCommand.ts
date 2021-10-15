@@ -6,7 +6,7 @@ import user from "../../structures/command/parameters/types/UserParameter";
 export default class AvatarCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
-            labels: ["avatar"],
+            labels: ["banner"],
             requirements: {},
             parameters: [
                 user({
@@ -20,12 +20,7 @@ export default class AvatarCommand extends Command {
         user ??= ctx.author;
         let embed = new MessageEmbed()
             .setAuthor(ctx.author.tag, ctx.author.displayAvatarURL())
-            .setDescription(
-                `**[Clique aqui](${user.displayAvatarURL({
-                    dynamic: true,
-                    size: 2048,
-                })}) para fazer o download.**`,
-            )
+            .setDescription(`**[Clique aqui](${user.bannerURL()} para fazer o download.**`)
             .setImage(user.displayAvatarURL({ dynamic: true, size: 2048 }))
             .setColor("RANDOM");
 

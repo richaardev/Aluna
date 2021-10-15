@@ -99,7 +99,6 @@ CanvasRenderingContext2D.prototype.roundRect = function (x: number, y: number, w
 };
 
 // String
-
 String.prototype.abbreviate = function (precision = 2) {
     let _this = parseInt(this as string);
     const suffsFromZeros = { 0: "", 3: "k", 6: "M", 9: "B", 12: "T" };
@@ -110,4 +109,14 @@ String.prototype.abbreviate = function (precision = 2) {
 
     const keyTyped = divDigits as keyof typeof suffsFromZeros;
     return _this < 1000 ? "" + _this : (calc.indexOf(".") === calc.length - 3 ? calc.replace(/\.00/, "") : calc) + suffsFromZeros[keyTyped];
+};
+
+// Functions
+Function.prototype.getParameters = function () {
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
+    var ARGUMENT_NAMES = /([^\s,]+)/g;
+    var fnStr = this.toString().replace(STRIP_COMMENTS, "");
+    var result = fnStr.slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")")).match(ARGUMENT_NAMES);
+    if (result === null) result = [];
+    return result;
 };

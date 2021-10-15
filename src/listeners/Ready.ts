@@ -1,8 +1,9 @@
 import { CommandContext } from "../structures/command";
-import { Interaction, Message } from "discord.js";
+import { ApplicationCommandOptionData, ChatInputApplicationCommandData, Interaction, Message } from "discord.js";
 import AlunaClient from "../AlunaClient";
 import Logger from "../utils/Logger";
 import AlunaPlayerManager from "../music/AlunaPlayerManager";
+import { APIApplicationCommandOption } from "discord.js/node_modules/discord-api-types";
 
 export default class Ready {
     public client: AlunaClient;
@@ -18,6 +19,30 @@ export default class Ready {
             shards: 1,
         });
         await this.client.playerManager.connect();
+
+        let cmds: string[] = [];
+        this.client.commandManager.forEach((command) => {
+            if (cmds.includes(command.options.labels[0])) return;
+            cmds.push(command.options.labels[0]);
+
+            let parameters = command.execute.getParameters().slice(1);
+            let options: any[] = [];
+            parameters.forEach((_parameter, i) => {
+                let param = command.options.parameters![i];
+                options.push({
+                    type: "STRING",
+                    required: param.required,
+                    name: _parameter,
+                    description: "Not Provided Description",
+                });
+            });
+
+            this.client.application?.commands.create({
+                name: command.options.labels[0],
+                description: "Nenhuma descrição",
+                options,
+            });
+        });
 
         Logger.info(`${this.client.user?.username} is now online!`);
     }

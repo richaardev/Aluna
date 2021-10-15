@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { CommandInteraction, Message } from "discord.js";
 import AlunaGuildPlayer from "../../music/structures/AlunaGuildPlayer";
 import string from "../../structures/command/parameters/types/StringParameter";
 import { setTimeout } from "timers/promises";

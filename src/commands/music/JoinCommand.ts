@@ -12,6 +12,7 @@ export default class JoinCommand extends Command {
         });
     }
     async execute(ctx: CommandContext) {
+        if (ctx.guildPlayer) return ctx.beautifulReply(Emojis.error, "Eu já estou em um canal de voz");
         this.client.playerManager
             ?.joinChannel(ctx.voice!.channel!)
             .then(async (player) => {
