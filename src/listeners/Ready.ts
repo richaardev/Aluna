@@ -1,9 +1,6 @@
-import { CommandContext } from "../structures/command";
-import { ApplicationCommandOptionData, ChatInputApplicationCommandData, Interaction, Message } from "discord.js";
 import AlunaClient from "../AlunaClient";
-import Logger from "../utils/Logger";
 import AlunaPlayerManager from "../music/AlunaPlayerManager";
-import { APIApplicationCommandOption } from "discord.js/node_modules/discord-api-types";
+import Logger from "../utils/Logger";
 
 export default class Ready {
     public client: AlunaClient;

@@ -11,7 +11,6 @@ export default class Command {
         this.options = options;
     }
 
-
     execute(_ctx: CommandContext, ..._params: any): void {}
     async _execute(ctx: CommandContext) {
         try {
