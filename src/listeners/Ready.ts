@@ -19,7 +19,10 @@ export default class Ready {
             shards: 1,
         });
         await this.client.playerManager.connect();
+        Logger.info(`${this.client.user?.username} is now online!`);
+    }
 
+    registerSlashCommands() {
         let cmds: string[] = [];
         let commands: any[] = [];
         this.client.commandManager.forEach((command) => {
@@ -34,7 +37,7 @@ export default class Ready {
                     type: param.type ?? "STRING",
                     required: param.required,
                     name: _parameter,
-                    description: "Not Provided Description",
+                    description: "-",
                 });
             });
 
@@ -44,10 +47,7 @@ export default class Ready {
                 options,
             });
         });
-        
-        this.client.application?.commands.set(commands)
-        Logger.info(`${this.client.user?.username} is now online!`);
-    }
-    
 
+        this.client.application?.commands.set(commands);
+    }
 }
