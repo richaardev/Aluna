@@ -8,6 +8,7 @@ export default function number(options: NumberInterface): NumberInterface {
         min: options.min ?? 0,
         max: options.max ?? 100_000_000_000,
 
+        type: "STRING",
         parse(ctx: CommandContext, argument: string | undefined, opt: NumberInterface) {
             if (!argument) return null;
 

@@ -7,6 +7,7 @@ export default class UserinfoCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["userinfo", "memberinfo", "ui"],
+            description: "Veja as informações de um usuário",
             requirements: {},
             parameters: [
                 member({

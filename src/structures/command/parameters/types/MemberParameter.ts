@@ -5,6 +5,7 @@ export default function member(options: UserInterface): UserInterface {
     return {
         ...options,
         required: options.required ?? true,
+        type: "USER",
 
         parse(ctx: CommandContext, argument: string | undefined, _opt: UserInterface) {
             let opt = user(_opt);

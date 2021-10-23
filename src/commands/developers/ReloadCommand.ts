@@ -6,6 +6,7 @@ export default class ReloadCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["reload"],
+            description: "Recarregue os comandos que foram modificados",
             requirements: {},
             parameters: [
                 string({

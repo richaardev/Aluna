@@ -7,6 +7,7 @@ export default class QueueCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["queue", "q"],
+            description: "Veja as musicas que estão na playlist",
             requirements: {
                 needsGuildPlayer: true,
                 voiceChannelOnly: true,

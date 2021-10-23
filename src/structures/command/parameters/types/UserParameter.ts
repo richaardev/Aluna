@@ -10,6 +10,7 @@ export default function user(options: UserInterface): UserInterface {
         denyBot: options.denyBot ?? false,
         denySelf: options.denySelf ?? false,
 
+        type: "USER",
         parse(ctx: CommandContext, argument: string | undefined, opt: UserInterface) {
             if (!argument) {
                 if (options.required) throw new Error(options.errorMessage);

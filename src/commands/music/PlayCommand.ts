@@ -11,6 +11,7 @@ export default class PlayCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["play", "tocar", "p"],
+            description: "Faça-me tocar uma musica ou adicione uma musica na playlist",
             requirements: {
                 voiceChannelOnly: true,
             },

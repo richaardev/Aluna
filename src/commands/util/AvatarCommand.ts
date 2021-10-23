@@ -7,6 +7,7 @@ export default class AvatarCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["avatar"],
+            description: "Veja o avatar de um usuário",
             requirements: {},
             parameters: [
                 user({

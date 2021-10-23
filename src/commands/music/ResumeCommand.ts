@@ -6,6 +6,7 @@ export default class ResumeCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["resume"],
+            description: "Despause a musica que está pausada",
             requirements: {
                 needsGuildPlayer: true,
                 voiceChannelOnly: true,

@@ -6,21 +6,19 @@ import Emojis from "src/utils/Emojis";
 import { ParameterInterface } from "./parameters/types/Parameter";
 
 export default class Command {
-    public client: AlunaClient;
-    public options: CommandOptions;
-
-    constructor(client: AlunaClient, options: CommandOptions) {
+    constructor(public client: AlunaClient, public options: CommandOptions) {
         this.client = client;
         this.options = options;
     }
-    execute(ctx: CommandContext, ...params: any): void {}
 
+
+    execute(_ctx: CommandContext, ..._params: any): void {}
     async _execute(ctx: CommandContext) {
         try {
             CommandRequirements.handle(ctx, this.options.requirements);
         } catch (err: any) {
             ctx.beautifulReply(Emojis.error, err.message);
-            return; //vo reiniciar :) pd?
+            return;
         }
 
         let args: any[];
@@ -42,7 +40,7 @@ export default class Command {
 
 interface CommandOptions {
     labels: string[];
-    description?: string;
+    description: string;
 
     requirements?: _CommandRequirements;
     parameters?: ParameterInterface[];

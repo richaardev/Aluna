@@ -8,6 +8,7 @@ export default class BanCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["ban", "banir", "hackban"],
+            description: "Bane um usuário do servidor",
             requirements: {},
             parameters: [
                 member({

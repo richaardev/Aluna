@@ -7,6 +7,7 @@ export default class BassBoostCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["bassboost"],
+            description: "Melhore o grave da musica em até 1000x",
             requirements: {
                 voiceChannelOnly: true,
                 needsGuildPlayer: true,

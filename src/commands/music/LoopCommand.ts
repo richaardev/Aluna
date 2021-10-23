@@ -5,6 +5,7 @@ export default class LoopCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["loop", "repetir"],
+            description: "Crie um loop da playlist ou da musica atual",
             requirements: {
                 needsGuildPlayer: true,
                 voiceChannelOnly: true,

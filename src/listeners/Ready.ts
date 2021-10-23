@@ -21,6 +21,7 @@ export default class Ready {
         await this.client.playerManager.connect();
 
         let cmds: string[] = [];
+        let commands: any[] = [];
         this.client.commandManager.forEach((command) => {
             if (cmds.includes(command.options.labels[0])) return;
             cmds.push(command.options.labels[0]);
@@ -30,20 +31,23 @@ export default class Ready {
             parameters.forEach((_parameter, i) => {
                 let param = command.options.parameters![i];
                 options.push({
-                    type: "STRING",
+                    type: param.type ?? "STRING",
                     required: param.required,
                     name: _parameter,
                     description: "Not Provided Description",
                 });
             });
 
-            this.client.application?.commands.create({
+            commands.push({
                 name: command.options.labels[0],
-                description: "Nenhuma descrição",
+                description: command.options.description ?? "Nenhuma descrição",
                 options,
             });
         });
-
+        
+        this.client.application?.commands.set(commands)
         Logger.info(`${this.client.user?.username} is now online!`);
     }
+    
+
 }

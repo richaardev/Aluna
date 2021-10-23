@@ -6,6 +6,7 @@ export default class DisconnectCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["disconnect", "leave"],
+            description: "Me disconecte do canal de voz",
             requirements: {
                 voiceChannelOnly: true,
                 needsGuildPlayer: true,

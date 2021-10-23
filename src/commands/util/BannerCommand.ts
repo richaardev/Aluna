@@ -7,6 +7,7 @@ export default class AvatarCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["banner"],
+            description: "Veja o banner de um usuário",
             requirements: {},
             parameters: [
                 user({
@@ -18,6 +19,7 @@ export default class AvatarCommand extends Command {
     }
     async execute(ctx: CommandContext, user: User) {
         user ??= ctx.author;
+
         let embed = new MessageEmbed()
             .setAuthor(ctx.author.tag, ctx.author.displayAvatarURL())
             .setDescription(`**[Clique aqui](${user.bannerURL()} para fazer o download.**`)

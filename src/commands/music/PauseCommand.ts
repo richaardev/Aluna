@@ -6,6 +6,7 @@ export default class PauseCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["pause", "pausar"],
+            description: "Pause a musica que está tocando no momento",
             requirements: {
                 voiceChannelOnly: true,
                 needsGuildPlayer: true,

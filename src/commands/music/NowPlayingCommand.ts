@@ -7,6 +7,7 @@ export default class NowPlayingCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["nowplaying", "np"],
+            description: "Veja qual musica está tocando agora",
             requirements: {
                 voiceChannelOnly: true,
                 needsGuildPlayer: true,

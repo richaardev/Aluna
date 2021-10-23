@@ -5,6 +5,7 @@ export default class SkipCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["skip", "pular"],
+            description: "Pule para proxima musica",
             requirements: {
                 voiceChannelOnly: true,
                 needsGuildPlayer: true,

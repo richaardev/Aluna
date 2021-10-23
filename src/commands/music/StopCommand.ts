@@ -6,6 +6,7 @@ export default class StopCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["stop"],
+            description: "Faça eu parar de tocar musica no canal de voz",
             requirements: {
                 needsGuildPlayer: true,
                 voiceChannelOnly: true,

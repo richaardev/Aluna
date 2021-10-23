@@ -7,6 +7,7 @@ export default class EvalCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["eval"],
+            description: "Execute codigos JavaScript",
             requirements: {
                 devOnly: true,
             },

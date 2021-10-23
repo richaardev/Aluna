@@ -7,6 +7,7 @@ export default function time(options: ParameterInterface): ParameterInterface {
         ...options,
         required: options.required ?? true,
 
+        type: "STRING",
         parse(ctx: CommandContext, argument: string | undefined, opt: ParameterInterface) {
             if (!argument) return null;
 

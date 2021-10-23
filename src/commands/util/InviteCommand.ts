@@ -6,6 +6,7 @@ export default class InviteCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["invite", "convite"],
+            description: "Me adicione em seu servidor",
             requirements: {},
         });
     }

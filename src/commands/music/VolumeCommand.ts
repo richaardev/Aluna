@@ -6,6 +6,7 @@ export default class VolumeCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["volume"],
+            description: "Altere o volume da musica",
             requirements: {
                 voiceChannelOnly: true,
                 needsGuildPlayer: true,

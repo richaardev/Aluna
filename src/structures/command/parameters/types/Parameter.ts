@@ -4,4 +4,5 @@ export interface ParameterInterface {
     required?: boolean;
 
     parse?: Function;
+    type?: string;
 }

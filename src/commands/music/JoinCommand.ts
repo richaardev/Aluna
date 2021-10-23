@@ -6,6 +6,7 @@ export default class JoinCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["join"],
+            description: "Faça eu entrar no canal de voz",
             requirements: {
                 voiceChannelOnly: true,
             },

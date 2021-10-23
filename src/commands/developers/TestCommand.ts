@@ -7,6 +7,7 @@ export default class TestCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["test"],
+            description: "Test",
             requirements: {
                 devOnly: true,
             },

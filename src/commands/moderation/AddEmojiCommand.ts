@@ -5,6 +5,7 @@ export default class AddEmojiCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["addemoji", "adicionaremoji"],
+            description: "Adicione um emoji no servidor",
             requirements: {},
             parameters: [
                 {

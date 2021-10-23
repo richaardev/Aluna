@@ -6,6 +6,7 @@ export default class BotinfoCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["botinfo", "bi"],
+            description: "Veja as minhas informações",
             requirements: {},
         });
     }

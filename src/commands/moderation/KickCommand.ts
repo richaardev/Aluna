@@ -8,6 +8,7 @@ export default class KickCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["kick", "expulsar"],
+            description: "Expulse um usuário do servidor",
             requirements: {},
             parameters: [
                 member({

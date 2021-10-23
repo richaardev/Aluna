@@ -6,6 +6,7 @@ export default class HelpCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["help"],
+            description: "Veja todos os meus comandos disponiveis para uso!",
             requirements: {},
         });
     }

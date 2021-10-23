@@ -6,6 +6,7 @@ export default class SeekCommand extends Command {
     constructor(client: AlunaClient) {
         super(client, {
             labels: ["seek", "s"],
+            description: "Altere a posição da musica",
             requirements: {
                 needsGuildPlayer: true,
                 voiceChannelOnly: true,
