@@ -1,10 +1,7 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
 import util from "node:util";
-
-import { Command } from "../../structures/command";
-import string from "../../structures/command/parameters/types/StringParameter";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import string from "@/structures/command/parameters/types/StringParameter";
 
 export default class EvalCommand extends Command {
   constructor(client: AlunaClient) {

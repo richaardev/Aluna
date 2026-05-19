@@ -1,14 +1,12 @@
-import type { Message } from "discord.js";
-import type AlunaClient from "../../AlunaClient";
-import type AlunaGuildPlayer from "../../music/structures/AlunaGuildPlayer";
-import type { CommandContext } from "../../structures/command";
-
 import { setTimeout } from "node:timers/promises";
+import type AlunaClient from "@/AlunaClient";
+import type AlunaGuildPlayer from "@/music/structures/AlunaGuildPlayer";
+import { Command, type CommandContext } from "@/structures/command";
+import string from "@/structures/command/parameters/types/StringParameter";
+import AlunaEmbed from "@/utils/AlunaEmbed";
+import Emojis from "@/utils/Emojis";
 
-import { Command } from "../../structures/command";
-import string from "../../structures/command/parameters/types/StringParameter";
-import AlunaEmbed from "../../utils/AlunaEmbed";
-import Emojis from "../../utils/Emojis";
+import { type Message } from "discord.js";
 
 export default class PlayCommand extends Command {
   constructor(client: AlunaClient) {

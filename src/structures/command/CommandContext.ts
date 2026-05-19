@@ -1,19 +1,20 @@
-import type {
-  Guild,
-  GuildMember,
-  Message,
-  MessageOptions,
-  MessagePayload,
-  TextChannel,
-  User,
-  VoiceState,
-} from "discord.js";
-import type Emojis from "src/utils/Emojis";
-import type AlunaClient from "../../AlunaClient";
-import type AlunaGuildPlayer from "../../music/structures/AlunaGuildPlayer";
-import type { Command } from ".";
+import type AlunaClient from "@/AlunaClient";
+import type AlunaGuildPlayer from "@/music/structures/AlunaGuildPlayer";
+import type Emojis from "@/utils/Emojis";
 
-import { CommandInteraction } from "discord.js";
+import {
+  CommandInteraction,
+  type Guild,
+  type GuildMember,
+  type Message,
+  type MessageOptions,
+  type MessagePayload,
+  type TextChannel,
+  type User,
+  type VoiceState,
+} from "discord.js";
+
+import { type Command } from ".";
 
 export default class CommandContext {
   public client: AlunaClient;

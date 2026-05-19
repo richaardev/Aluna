@@ -1,6 +1,6 @@
-import type AlunaClient from "../AlunaClient";
+import type AlunaClient from "@/AlunaClient";
 
-import Collection from "@discordjs/collection";
+import { Collection } from "discord.js";
 
 export default class Manager<K, V> extends Collection<K, V> {
   public client: AlunaClient;

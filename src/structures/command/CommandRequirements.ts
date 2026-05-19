@@ -1,7 +1,8 @@
-import type { PermissionString } from "discord.js";
-import type { CommandContext } from ".";
+import PermissionUtils from "@/utils/PermissionsUtils";
 
-import PermissionUtils from "../../utils/PermissionsUtils";
+import { type PermissionString } from "discord.js";
+
+import { type CommandContext } from ".";
 
 export interface _CommandRequirements {
   botPermission?: PermissionString[] | null;

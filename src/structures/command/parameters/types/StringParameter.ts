@@ -1,5 +1,5 @@
-import type { CommandContext } from "../..";
-import type { ParameterInterface } from "./Parameter";
+import { type CommandContext } from "@/structures/command";
+import { type ParameterInterface } from "@/structures/command/parameters/types/Parameter";
 
 export default function string(options: StringInterface): StringInterface {
   return {

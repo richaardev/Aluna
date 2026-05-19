@@ -1,10 +1,8 @@
-import type { Message } from "discord.js";
-import type AlunaClient from "../AlunaClient";
+import type AlunaClient from "@/AlunaClient";
+import { CommandContext } from "@/structures/command";
+import Emojis from "@/utils/Emojis";
 
-import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
-
-import { CommandContext } from "../structures/command";
-import Emojis from "../utils/Emojis";
+import { type Message, MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 
 export default class MessageListener {
   public client: AlunaClient;

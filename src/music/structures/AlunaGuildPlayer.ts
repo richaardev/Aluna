@@ -1,9 +1,6 @@
-import type { LavalinkNode, TrackResponse } from "@lavacord/discord.js";
-
-import { Player, Rest } from "@lavacord/discord.js";
-
-import Queue from "./Queue";
-import Song from "./Song";
+import { type LavalinkNode, Player, Rest, type TrackResponse } from "@lavacord/discord.js";
+import Queue from "@/music/structures/Queue";
+import Song from "@/music/structures/Song";
 
 export default class AlunaGuildPlayer extends Player {
   public readonly queue: Queue;

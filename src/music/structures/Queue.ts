@@ -1,7 +1,7 @@
-import type { TextChannel } from "discord.js";
-import type AlunaGuildPlayer from "./AlunaGuildPlayer";
-import type Song from "./Song";
+import type AlunaGuildPlayer from "@/music/structures/AlunaGuildPlayer";
+import type Song from "@/music/structures/Song";
 
+import { type TextChannel } from "discord.js";
 import moment from "moment";
 
 export default class Queue {

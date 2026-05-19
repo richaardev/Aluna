@@ -1,7 +1,6 @@
 import { readdirSync } from "node:fs";
 import path from "node:path";
-
-import Manager from "../structures/Manager"; // que?
+import Manager from "@/structures/Manager"; // que?
 
 export default class EventsManager extends Manager<string, any> {
   _load() {

@@ -1,8 +1,6 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
-import { Command } from "../../structures/command";
-import number from "../../structures/command/parameters/types/NumberParameter";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import number from "@/structures/command/parameters/types/NumberParameter";
 
 export default class VolumeCommand extends Command {
   constructor(client: AlunaClient) {

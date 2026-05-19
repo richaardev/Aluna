@@ -1,9 +1,9 @@
+import type AlunaClient from "@/AlunaClient";
+import { env } from "@/env";
+import type AlunaGuildPlayer from "@/music/structures/AlunaGuildPlayer";
+
 import { type StageChannel, type VoiceChannel } from "discord.js";
 import { LavalinkManager, type ManagerOptions } from "lavalink-client";
-
-import type AlunaClient from "../AlunaClient";
-import { env } from "../env";
-import type AlunaGuildPlayer from "./structures/AlunaGuildPlayer";
 
 const nodes = env.LAVALINK_NODES;
 

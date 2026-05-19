@@ -1,7 +1,7 @@
-import type { Interaction } from "discord.js";
-import type AlunaClient from "../AlunaClient";
+import type AlunaClient from "@/AlunaClient";
+import { CommandContext } from "@/structures/command";
 
-import { CommandContext } from "../structures/command";
+import { type Interaction } from "discord.js";
 
 export default class InteractionCreate {
   public client: AlunaClient;

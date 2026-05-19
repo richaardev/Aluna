@@ -4,7 +4,7 @@ const envSchema = z.object({
   NODE_ENV: z._default(z.optional(z.enum(["development", "production", "test"])), "development"),
 
   DISCORD_BOT_TOKEN: z.string(),
-  LAVALINK_NODES: z.string(),
+  // LAVALINK_NODES: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

@@ -1,6 +1,5 @@
-import type AlunaClient from "../AlunaClient";
-
-import YoutubeApi from "./YoutubeApi";
+import type AlunaClient from "@/AlunaClient";
+import YoutubeApi from "@/apis/YoutubeApi";
 
 export default class Apis {
   youtube: YoutubeApi;

@@ -1,11 +1,9 @@
-import type { ClientOptions } from "discord.js";
-import type AlunaPlayerManager from "./music/AlunaPlayerManager";
+import Apis from "@/apis";
+import CommandManager from "@/managers/CommandManager";
+import ListenersManager from "@/managers/ListenersManager";
+import type AlunaPlayerManager from "@/music/AlunaPlayerManager";
 
-import { Client, PermissionsBitField } from "discord.js";
-
-import Apis from "./apis";
-import CommandManager from "./managers/CommandManager";
-import ListenersManager from "./managers/ListenersManager";
+import { Client, type ClientOptions, PermissionsBitField } from "discord.js";
 
 export default class AlunaClient extends Client {
   public listenerManager: ListenersManager;

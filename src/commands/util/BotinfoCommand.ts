@@ -1,8 +1,6 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
-import { Command } from "../../structures/command";
-import AlunaEmbed from "../../utils/AlunaEmbed";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import AlunaEmbed from "@/utils/AlunaEmbed";
 
 export default class BotinfoCommand extends Command {
   constructor(client: AlunaClient) {

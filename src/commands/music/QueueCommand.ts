@@ -1,10 +1,8 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
 
 import { createCanvas, loadImage } from "canvas";
 import { MessageAttachment } from "discord.js";
-
-import { Command } from "../../structures/command";
 
 export default class QueueCommand extends Command {
   constructor(client: AlunaClient) {

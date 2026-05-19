@@ -1,5 +1,4 @@
-import type { TrackData } from "lavacord";
-
+import { type TrackData } from "lavacord";
 import moment from "moment";
 
 export default class Song {

@@ -1,4 +1,4 @@
-import type AlunaClient from "../AlunaClient";
+import type AlunaClient from "@/AlunaClient";
 
 export default class ApiWrapper {
   public client: AlunaClient;

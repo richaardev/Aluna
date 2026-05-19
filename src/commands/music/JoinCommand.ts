@@ -1,8 +1,6 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
-import { Command } from "../../structures/command";
-import Emojis from "../../utils/Emojis";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import Emojis from "@/utils/Emojis";
 
 export default class JoinCommand extends Command {
   constructor(client: AlunaClient) {

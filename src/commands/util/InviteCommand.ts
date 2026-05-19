@@ -1,9 +1,7 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
 
 import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
-
-import { Command } from "../../structures/command";
 
 export default class InviteCommand extends Command {
   constructor(client: AlunaClient) {

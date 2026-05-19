@@ -1,9 +1,8 @@
-import type { User } from "discord.js";
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import user from "@/structures/command/parameters/types/UserParameter";
 
-import { Command } from "../../structures/command";
-import user from "../../structures/command/parameters/types/UserParameter";
+import { type User } from "discord.js";
 
 export default class TestCommand extends Command {
   constructor(client: AlunaClient) {

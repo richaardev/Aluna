@@ -1,9 +1,7 @@
-import type { Command } from "../structures/command";
-
 import { readdirSync } from "node:fs";
 import path from "node:path";
-
-import Manager from "../structures/Manager";
+import { type Command } from "@/structures/command";
+import Manager from "@/structures/Manager";
 
 export default class CommandManager extends Manager<string, Command> {
   _load() {

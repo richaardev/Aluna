@@ -1,6 +1,4 @@
-import type { Image } from "canvas";
-
-import { CanvasRenderingContext2D, createCanvas, registerFont } from "canvas";
+import { CanvasRenderingContext2D, createCanvas, type Image, registerFont } from "canvas";
 
 // Canvas
 registerFont("src/fonts/MatSaleh.ttf", {

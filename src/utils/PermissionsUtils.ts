@@ -1,4 +1,4 @@
-import type { GuildMember, PermissionString, TextChannel, User } from "discord.js";
+import { type GuildMember, type PermissionString, type TextChannel, type User } from "discord.js";
 
 export default class PermissionUtils {
   static isDeveloper(author: User) {

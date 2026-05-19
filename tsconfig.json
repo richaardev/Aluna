@@ -16,6 +16,10 @@
     // "types": ["node"],
     // and npm install -D @types/node
 
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     // Other Outputs
     "sourceMap": true,
     "declaration": true,

@@ -1,7 +1,5 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
-import { Command } from "../../structures/command";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
 
 export default class SkipCommand extends Command {
   constructor(client: AlunaClient) {

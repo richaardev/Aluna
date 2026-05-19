@@ -1,6 +1,6 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
-export default class AlunaEmbed extends MessageEmbed {
+export default class AlunaEmbed extends EmbedBuilder {
   constructor() {
     super();
 

@@ -1,7 +1,5 @@
-import type { CommandContext } from "../..";
-import type { UserInterface } from "./UserParameter";
-
-import user from "./UserParameter";
+import { type CommandContext } from "@/structures/command";
+import user, { type UserInterface } from "@/structures/command/parameters/types/UserParameter";
 
 export default function member(options: UserInterface): UserInterface {
   return {

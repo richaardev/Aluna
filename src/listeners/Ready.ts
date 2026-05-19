@@ -1,7 +1,6 @@
-import type AlunaClient from "../AlunaClient";
-
-import AlunaPlayerManager from "../music/AlunaPlayerManager";
-import Logger from "../utils/Logger";
+import type AlunaClient from "@/AlunaClient";
+import AlunaPlayerManager from "@/music/AlunaPlayerManager";
+import Logger from "@/utils/Logger";
 
 export default class Ready {
   public client: AlunaClient;

@@ -1,6 +1,6 @@
-import * as api from "googleapis";
+import ApiWrapper from "@/apis/ApiWrapper";
 
-import ApiWrapper from "./ApiWrapper";
+import * as api from "googleapis";
 
 export default class YoutubeApi extends ApiWrapper {
   getVideoInfo(id: string): Promise<api.youtube_v3.Schema$Video> {

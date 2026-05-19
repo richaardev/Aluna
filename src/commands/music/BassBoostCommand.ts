@@ -1,9 +1,7 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
-import { Command } from "../../structures/command";
-import string from "../../structures/command/parameters/types/StringParameter";
-import Emojis from "../../utils/Emojis";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import string from "@/structures/command/parameters/types/StringParameter";
+import Emojis from "@/utils/Emojis";
 
 export default class BassBoostCommand extends Command {
   constructor(client: AlunaClient) {

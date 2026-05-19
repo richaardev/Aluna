@@ -1,12 +1,9 @@
-import type AlunaClient from "../../AlunaClient";
-import type CommandContext from "./CommandContext";
-import type { _CommandRequirements } from "./CommandRequirements";
-import type { ParameterInterface } from "./parameters/types/Parameter";
-
-import Emojis from "src/utils/Emojis";
-
-import CommandRequirements from "./CommandRequirements";
-import CommandParameters from "./parameters/CommandParameters";
+import type AlunaClient from "@/AlunaClient";
+import type CommandContext from "@/structures/command/CommandContext";
+import CommandRequirements, { type _CommandRequirements } from "@/structures/command/CommandRequirements";
+import CommandParameters from "@/structures/command/parameters/CommandParameters";
+import { type ParameterInterface } from "@/structures/command/parameters/types/Parameter";
+import Emojis from "@/utils/Emojis";
 
 export default class Command {
   constructor(

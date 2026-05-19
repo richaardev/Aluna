@@ -1,14 +1,17 @@
 import "dotenv/config";
 
-import AlunaClient from "./AlunaClient";
-import Logger from "./utils/Logger";
+import AlunaClient from "@/AlunaClient";
+import Logger from "@/utils/Logger";
 
-import("./utils/Prototypes");
-import("moment-duration-format");
+import { GatewayIntentBits } from "discord.js";
+
+import "@/utils/Prototypes";
+import "moment-duration-format";
+import { env } from "@/env";
 
 Logger.info("Starting...");
 const client = new AlunaClient({
-  intents: 32767,
+  intents: GatewayIntentBits.GuildMessages,
   shards: "auto",
   allowedMentions: {
     parse: ["roles", "users"],
@@ -16,4 +19,4 @@ const client = new AlunaClient({
   },
 });
 
-client.login(process.env.TOKEN!);
+client.login(env.DISCORD_BOT_TOKEN);

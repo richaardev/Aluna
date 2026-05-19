@@ -1,8 +1,6 @@
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
-
-import { Command } from "../../structures/command";
-import string from "../../structures/command/parameters/types/StringParameter";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import string from "@/structures/command/parameters/types/StringParameter";
 
 export default class ReloadCommand extends Command {
   constructor(client: AlunaClient) {

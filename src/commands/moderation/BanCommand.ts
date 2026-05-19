@@ -1,10 +1,9 @@
-import type { GuildMember } from "discord.js";
-import type AlunaClient from "../../AlunaClient";
-import type { CommandContext } from "../../structures/command";
+import type AlunaClient from "@/AlunaClient";
+import { Command, type CommandContext } from "@/structures/command";
+import member from "@/structures/command/parameters/types/MemberParameter";
+import string from "@/structures/command/parameters/types/StringParameter";
 
-import { Command } from "../../structures/command";
-import member from "../../structures/command/parameters/types/MemberParameter";
-import string from "../../structures/command/parameters/types/StringParameter";
+import { type GuildMember } from "discord.js";
 
 export default class BanCommand extends Command {
   constructor(client: AlunaClient) {
