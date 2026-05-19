@@ -5,7 +5,7 @@ import type AlunaPlayerManager from "@/music/AlunaPlayerManager";
 
 import { Client, type ClientOptions, PermissionsBitField } from "discord.js";
 
-export default class AlunaClient extends Client {
+export default class AlunaClient<Ready extends boolean = boolean> extends Client<Ready> {
   public listenerManager: ListenersManager;
   public commandManager: CommandManager;
   public playerManager?: AlunaPlayerManager;

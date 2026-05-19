@@ -1,24 +1,37 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
-import Emojis from "@/utils/Emojis";
+import { createSlashCommand } from "@/structures/command";
+import { requireVoiceChannel } from "@/structures/command/middlewares";
 
-export default class JoinCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["join"],
-      description: "Faça eu entrar no canal de voz",
-      requirements: {
-        voiceChannelOnly: true,
-      },
-    });
-  }
-  async execute(ctx: CommandContext) {
-    if (ctx.guildPlayer) return ctx.beautifulReply(Emojis.error, "Eu já estou em um canal de voz");
-    this.client.playerManager
-      ?.joinChannel(ctx.voice!.channel!)
-      .then(async (player) => {
-        await ctx.beautifulReply("🎧", `Eu entrei em \`${ctx.voice?.channel!.name}\``);
-      })
-      .catch((err) => ctx.beautifulReply(Emojis.error, `Não consegui entrar no canal de voz! `));
-  }
-}
+import { InteractionContextType } from "discord.js";
+
+export default createSlashCommand<"cached">({
+  name: "join",
+  description: "Faça eu entrar no canal de voz",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel],
+  async execute(interaction) {
+    const existingPlayer = this.playerManager?.getPlayer(interaction.guildId);
+
+    if (existingPlayer?.connected) return interaction.reply({ content: "Eu já estou em um canal de voz" });
+
+    const member = interaction.member;
+    const voiceChannel = member?.voice?.channel;
+
+    if (!voiceChannel) return interaction.reply({ content: "Você precisa estar em um canal de voz!" });
+
+    try {
+      const player = await this.playerManager?.createPlayer({
+        guildId: interaction.guildId,
+        voiceChannelId: voiceChannel.id,
+        textChannelId: interaction.channelId,
+        selfDeaf: true,
+        selfMute: false,
+        volume: 100,
+      });
+
+      await player?.connect();
+      await interaction.reply({ content: `Eu entrei em \`${voiceChannel.name}\`` });
+    } catch (err) {
+      await interaction.reply({ content: `Não consegui entrar no canal de voz!` });
+    }
+  },
+});

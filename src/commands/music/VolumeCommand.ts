@@ -1,26 +1,32 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
-import number from "@/structures/command/parameters/types/NumberParameter";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
 
-export default class VolumeCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["volume"],
-      description: "Altere o volume da musica",
-      requirements: {
-        voiceChannelOnly: true,
-        needsGuildPlayer: true,
-      },
-      parameters: [
-        number({
-          errorMessage: "Você precisa indicar um numero entre 0 á 100",
-          max: 150,
-        }),
-      ],
-    });
-  }
-  async execute(ctx: CommandContext, volume: number) {
-    ctx.guildPlayer!.volume(volume);
-    ctx.beautifulReply("🔊", `O volume da musica foi alterado para \`${volume}\``);
-  }
-}
+import { ApplicationCommandOptionType, InteractionContextType } from "discord.js";
+
+export default createSlashCommand<"cached">({
+  name: "volume",
+  description: "Altere o volume da musica",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  options: [
+    {
+      name: "volume",
+      description: "Volume level (0-150)",
+      type: ApplicationCommandOptionType.Integer,
+      required: true,
+      minValue: 0,
+      maxValue: 150,
+    },
+  ],
+  async execute(interaction) {
+    const volume = interaction.options.getInteger("volume", true);
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    
+    if (!guildPlayer) {
+      return interaction.reply({ content: "Não há nenhum player ativo!" });
+    }
+
+    await guildPlayer.setVolume(volume);
+    interaction.reply({ content: `🔊 O volume da musica foi alterado para \`${volume}\`` });
+  },
+});

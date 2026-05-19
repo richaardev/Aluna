@@ -1,49 +1,27 @@
-import { type LavalinkNode, Player, Rest, type TrackResponse } from "@lavacord/discord.js";
-import Queue from "@/music/structures/Queue";
-import Song from "@/music/structures/Song";
+import { formatCurrentTime } from "@/utils/formatDuration";
+
+import { Player } from "lavalink-client";
 
 export default class AlunaGuildPlayer extends Player {
-  public readonly queue: Queue;
-  public bassboost: boolean;
-  public loop: boolean;
+  public currentBassBoostLevel = 0;
 
-  constructor(node: LavalinkNode, id: string) {
-    super(node, id);
+  async setBassboost(gain: number, level: number) {
+    const bands = Array(4)
+      .fill(0)
+      .map((_, i) => ({ band: i, gain }));
 
-    this.queue = new Queue(this);
-    this.bassboost = false;
-    this.loop = false;
+    await this.filterManager.setEQ(bands);
+    this.currentBassBoostLevel = level;
+
+    return level;
   }
 
-  loadTracks(songName: string, provider = "ytsearch:"): Promise<TrackResponse> {
-    return Rest.load(this.node, `${provider}${songName}`);
+  async clearBassboost() {
+    await this.filterManager.clearEQ();
+    this.currentBassBoostLevel = 0;
   }
 
-  getSong(requestedBy: string, songName: string): Promise<Song> {
-    return this.loadTracks(songName).then((songs) => {
-      return new Song(songs.tracks[0], requestedBy);
-    });
-  }
-
-  _play(song: Song, forcePlay = false) {
-    if (this.playing && !forcePlay) {
-      this.queue.add(song);
-      return;
-    }
-
-    this.queue.play(song);
-    this.volume(50);
-  }
-
-  setBassboost(gain: number) {
-    const state = !this.bassboost;
-    this.equalizer(
-      Array(6)
-        .fill(0)
-        .map((n, i) => ({ band: i, gain })),
-    );
-    this.bassboost = state;
-
-    return state;
+  get currentTime(): string {
+    return formatCurrentTime(this.position);
   }
 }

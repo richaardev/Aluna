@@ -1,24 +1,20 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
-import Emojis from "@/utils/Emojis";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
 
-export default class PauseCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["pause", "pausar"],
-      description: "Pause a musica que está tocando no momento",
-      requirements: {
-        voiceChannelOnly: true,
-        needsGuildPlayer: true,
-      },
-    });
-  }
-  async execute(ctx: CommandContext) {
-    if (ctx.guildPlayer!.paused) {
-      ctx.beautifulReply(`${Emojis.error}`, `A musica já está pausada!`);
-    } else {
-      ctx.guildPlayer!.pause(true);
-      ctx.beautifulReply("▶️", `A musica foi pausada com sucesso!`);
+import { InteractionContextType } from "discord.js";
+
+export default createSlashCommand<"cached">({
+  name: "pause",
+  description: "Pause a musica que está tocando no momento",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  async execute(interaction) {
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+
+    if (guildPlayer?.paused) interaction.reply({ content: "⏸️ A musica já está pausada!" });
+    else {
+      await guildPlayer?.pause();
+      interaction.reply({ content: "⏸️ A musica foi pausada com sucesso!" });
     }
-  }
-}
+  },
+});

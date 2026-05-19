@@ -1,5 +1,4 @@
-import { type TrackData } from "lavacord";
-
-export interface AlunaTrack extends TrackData {
+export interface AlunaTrackUserData {
   requestedBy: string;
+  requestedAt?: number;
 }

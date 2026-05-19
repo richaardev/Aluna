@@ -1,34 +1,28 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
+import { createSlashCommand } from "@/structures/command";
 
-import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
-export default class InviteCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["invite", "convite"],
-      description: "Me adicione em seu servidor",
-      requirements: {},
-    });
-  }
-  async execute(ctx: CommandContext) {
-    const embed = new MessageEmbed()
-      .setColor("RANDOM")
-      .setThumbnail(this.client.user?.displayAvatarURL()!)
-      .setAuthor(ctx.author.tag, ctx.author.displayAvatarURL())
+export default createSlashCommand({
+  name: "invite",
+  description: "Me adicione em seu servidor",
+  async execute(interaction) {
+    const embed = new EmbedBuilder()
+      .setColor(0x5865f2)
+      .setThumbnail(this.user?.displayAvatarURL()!)
+      .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
       .setDescription(
-        `Quer me adicionar em outros servidores/guilds do discord?\n Então **clique [aqui](${this.client.inviteURL})** ou no botão abaixo para me adicionar!`,
+        `Quer me adicionar em outros servidores/guilds do discord?\n Então **clique [aqui](${this.inviteURL})** ou no botão abaixo para me adicionar!`,
       );
-    const row = new MessageActionRow().addComponents(
-      new MessageButton()
-        .setStyle("LINK")
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
         .setLabel("Clique aqui para me adicionar!")
-        .setURL(this.client.inviteURL),
+        .setURL(this.inviteURL),
     );
 
-    ctx.reply({
+    interaction.reply({
       embeds: [embed],
       components: [row],
     });
-  }
-}
+  },
+});

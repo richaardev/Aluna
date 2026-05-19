@@ -1,21 +1,18 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
 
-import { Message } from "discord.js";
+import { InteractionContextType } from "discord.js";
 
-export default class DisconnectCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["disconnect", "leave"],
-      description: "Me disconecte do canal de voz",
-      requirements: {
-        voiceChannelOnly: true,
-        needsGuildPlayer: true,
-      },
-    });
-  }
-  async execute(ctx: CommandContext) {
-    ctx.guildPlayer?.manager.leave(ctx.guild?.id!);
-    if (ctx.message instanceof Message) ctx.message.react("⏹️");
-  }
-}
+export default createSlashCommand<"cached">({
+  name: "disconnect",
+  description: "Me disconecte do canal de voz",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  async execute(interaction) {
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    if (!guildPlayer) return interaction.reply({ content: "Não há nenhum player ativo!" });
+
+    await guildPlayer.destroy("User requested disconnect");
+    interaction.reply({ content: "👋 Desconectado do canal de voz!" });
+  },
+});

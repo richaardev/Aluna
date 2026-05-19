@@ -1,24 +1,20 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
-import Emojis from "@/utils/Emojis";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
 
-export default class ResumeCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["resume"],
-      description: "Despause a musica que está pausada",
-      requirements: {
-        needsGuildPlayer: true,
-        voiceChannelOnly: true,
-      },
-    });
-  }
-  async execute(ctx: CommandContext) {
-    if (ctx.guildPlayer!.paused) {
-      ctx.guildPlayer?.resume();
-      ctx.beautifulReply("⏸️", "A musica está sendo continuada!");
+import { InteractionContextType } from "discord.js";
+
+export default createSlashCommand<"cached">({
+  name: "resume",
+  description: "Despause a musica que está pausada",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  async execute(interaction) {
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    if (guildPlayer?.paused) {
+      await guildPlayer?.resume();
+      interaction.reply({ content: "▶️ A musica está sendo continuada!" });
     } else {
-      ctx.beautifulReply(Emojis.error, "A musica já está tocando!");
+      interaction.reply({ content: "▶️ A musica já está tocando!" });
     }
-  }
-}
+  },
+});

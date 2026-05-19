@@ -3,15 +3,22 @@ import "dotenv/config";
 import AlunaClient from "@/AlunaClient";
 import Logger from "@/utils/Logger";
 
-import { GatewayIntentBits } from "discord.js";
+import { GatewayIntentBits, Partials } from "discord.js";
 
 import "@/utils/Prototypes";
 import "moment-duration-format";
 import { env } from "@/env";
 
 Logger.info("Starting...");
+
 const client = new AlunaClient({
-  intents: GatewayIntentBits.GuildMessages,
+  intents:
+    GatewayIntentBits.Guilds |
+    GatewayIntentBits.GuildMembers |
+    GatewayIntentBits.GuildMessages |
+    GatewayIntentBits.GuildVoiceStates |
+    GatewayIntentBits.MessageContent,
+  partials: [Partials.Channel, Partials.GuildMember],
   shards: "auto",
   allowedMentions: {
     parse: ["roles", "users"],

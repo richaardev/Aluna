@@ -1,36 +1,30 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
-import user from "@/structures/command/parameters/types/UserParameter";
+import { createSlashCommand } from "@/structures/command";
 
-import { MessageEmbed, type User } from "discord.js";
+import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 
-export default class AvatarCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["avatar"],
-      description: "Veja o avatar de um usuário",
-      requirements: {},
-      parameters: [
-        user({
-          required: false,
-          errorMessage: "",
-        }),
-      ],
-    });
-  }
-  async execute(ctx: CommandContext, user: User) {
-    user ??= ctx.author;
-    const embed = new MessageEmbed()
-      .setAuthor(ctx.author.tag, ctx.author.displayAvatarURL())
+export default createSlashCommand({
+  name: "avatar",
+  description: "Veja o avatar de um usuário",
+  options: [
+    {
+      name: "user",
+      description: "Usuário para ver o avatar",
+      type: ApplicationCommandOptionType.User,
+      required: false,
+    },
+  ],
+  async execute(interaction) {
+    const targetUser = interaction.options.getUser("user") ?? interaction.user;
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
       .setDescription(
-        `**[Clique aqui](${user.displayAvatarURL({
-          dynamic: true,
+        `**[Clique aqui](${targetUser.displayAvatarURL({
           size: 2048,
         })}) para fazer o download.**`,
       )
-      .setImage(user.displayAvatarURL({ dynamic: true, size: 2048 }))
-      .setColor("RANDOM");
+      .setImage(targetUser.displayAvatarURL({ size: 2048 }))
+      .setColor(0x5865f2);
 
-    ctx.reply({ embeds: [embed] });
-  }
-}
+    interaction.reply({ embeds: [embed] });
+  },
+});

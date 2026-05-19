@@ -1,104 +1,100 @@
-import { setTimeout } from "node:timers/promises";
-import type AlunaClient from "@/AlunaClient";
-import type AlunaGuildPlayer from "@/music/structures/AlunaGuildPlayer";
-import { Command, type CommandContext } from "@/structures/command";
-import string from "@/structures/command/parameters/types/StringParameter";
+import { type AlunaTrackUserData } from "@/music/Types";
+import { createSlashCommand } from "@/structures/command";
+import { requireVoiceChannel } from "@/structures/command/middlewares";
 import AlunaEmbed from "@/utils/AlunaEmbed";
-import Emojis from "@/utils/Emojis";
+import { formatDuration } from "@/utils/formatDuration";
 
-import { type Message } from "discord.js";
+import { ApplicationCommandOptionType, InteractionContextType } from "discord.js";
 
-export default class PlayCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["play", "tocar", "p"],
-      description: "Faça-me tocar uma musica ou adicione uma musica na playlist",
-      requirements: {
-        voiceChannelOnly: true,
+export default createSlashCommand<"cached">({
+  name: "play",
+  description: "Faça-me tocar uma musica ou adicione uma musica na playlist",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel],
+  options: [
+    {
+      name: "song",
+      description: "Nome ou URL da música",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
+  async execute(interaction) {
+    if (!this.playerManager) return;
+
+    const query = interaction.options.getString("song", true);
+    await interaction.guild.fetch();
+    const member = await interaction.member.fetch();
+
+    console.log(member.voice);
+    const voiceChannelId = member?.voice?.channelId;
+    if (!voiceChannelId) return interaction.reply({ content: "Você precisa estar em um canal de voz!" });
+
+    const voiceChannel = (await interaction.guild.channels.fetch(voiceChannelId))!;
+
+    await interaction.deferReply();
+
+    // Get or create player
+    let player = this.playerManager.getPlayer(interaction.guildId);
+
+    if (!player)
+      player = this.playerManager.createPlayer({
+        guildId: interaction.guildId,
+        voiceChannelId: voiceChannel.id,
+        textChannelId: interaction.channelId,
+        selfDeaf: true,
+        selfMute: false,
+        volume: 100,
+      });
+
+    if (!player.connected) await player.connect();
+
+    const result = await player.search(
+      {
+        query: query,
+        source: "scsearch",
       },
-      parameters: [
-        string({
-          errorMessage: "Você precisa indicar uma musica para tocar!",
-          full: true,
-        }),
-      ],
-    });
-  }
-  async execute(ctx: CommandContext, song: string) {
-    if (ctx.guildPlayer) {
-      ctx.guildPlayer!.getSong(ctx.author.id, song).then((song) => {
-        ctx.guildPlayer?._play(song);
-        const youtube = this.client.apis.youtube;
-        youtube.getVideoInfo(song.identifier).then((video) => {
-          const embed = new AlunaEmbed()
-            .setThumbnail(youtube.getBestThumbnail(video.snippet?.thumbnails!)!)
-            .setTitle("**Musica adicionada na fila**")
-            .addField(":tv: Nome", `\`${song.title}\``)
-            .addField("⏰ Duração", `\`${song.time}\``, true)
-            .addField(":+1: Likes", `\`${video.statistics?.likeCount?.abbreviate()}\``, true)
-            .addField(":-1: Deslikes", `\`${video.statistics?.dislikeCount?.abbreviate()}\``, true)
-            .addField(":tv: Visualizações", `\`${video.statistics?.viewCount?.abbreviate()}\``, true);
-
-          ctx.reply({
-            embeds: [embed],
-          });
-        });
-      });
-    } else {
-      this.client.playerManager
-        ?.joinChannel(ctx.voice!.channel!)
-        .then(async (player) => {
-          await ctx.channel.send(`🎧 **|** Eu entrei em \`${ctx.voice?.channel!.name}\``);
-          await ctx.channel.send(`🔎 **|** Pesquisando a musica \`${song}\``);
-          player.getSong(ctx.author.id, song).then((song) => {
-            player._play(song);
-          });
-          this.startSongFeedback(ctx, player);
-        })
-        .catch((err) => ctx.channel.send(`${Emojis.error} **|** Não consegui entrar no canal de voz! `));
-    }
-  }
-
-  startSongFeedback(ctx: CommandContext, player: AlunaGuildPlayer) {
-    const messages: Message[] = [];
-    const send = async (emoji: string, msg: string, deletable: boolean = false) => {
-      const newMsg = await ctx.channel.send({
-        content: `${emoji} **|** ${msg}`,
-        allowedMentions: {
-          parse: [],
-          repliedUser: false,
-        },
-      });
-      const old_message = messages.shift();
-      if (old_message && deletable) await old_message.delete();
-      if (deletable) messages.push(newMsg);
-
-      return newMsg;
-    };
-
-    player.on("start", () =>
-      send(
-        "🔊",
-        `Tocando agora **${player.queue.nowPlaying?.title}** solicitado por <@!${player.queue.nowPlaying?.requestedBy}>`,
-        true,
-      ),
+      interaction.user,
     );
-    player.on("end", async ({ reason }) => {
-      switch (reason) {
-        case "FINISHED":
-        case "STOPPED":
-        case "REPLACED":
-          if (player.queue.hasNext) {
-            player.queue.playNext();
-          } else {
-            send("💿", `Todas as musicas acabaram!`);
-            await setTimeout(5 * 60 * 1000);
-            if (player.playing) return;
-            player.manager.leave(player.id);
-            player.destroy();
-          }
-          break;
-      }
-    });
-  }
-}
+
+    if (!result || !result.tracks || result.tracks.length === 0) {
+      return interaction.editReply({ content: "❌ Não encontrei nenhuma música com esse nome!" });
+    }
+
+    // Add user data to track
+    const track = result.tracks[0];
+    if (!track) {
+      return interaction.editReply({ content: "❌ Não encontrei nenhuma música com esse nome!" });
+    }
+
+    track.userData = {
+      requestedBy: interaction.user.id,
+      requestedAt: Date.now(),
+    } satisfies AlunaTrackUserData;
+
+    // Add to queue
+    await player.queue.add(track);
+
+    // Create embed response
+    const embed = new AlunaEmbed()
+      .setThumbnail(track.info.artworkUrl || "")
+      .setTitle("**Musica adicionada na fila**")
+      .addFields([
+        { name: ":tv: Nome", value: `\`${track.info.title}\``, inline: false },
+        {
+          name: "⏰ Duração",
+          value: `\`${formatDuration(track.info.duration || 0, track.info.isStream)}\``,
+          inline: true,
+        },
+        { name: ":bust_in_silhouette: Autor", value: `\`${track.info.author}\``, inline: true },
+        { name: "#️⃣ Posição na fila", value: `\`${player.queue.tracks.length}\``, inline: true },
+      ]);
+
+    await interaction.editReply({ embeds: [embed] });
+
+    // Start playing if not already playing
+    if (!player.playing && !player.paused) {
+      await player.play();
+    }
+  },
+});

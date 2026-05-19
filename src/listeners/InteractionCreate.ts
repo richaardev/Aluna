@@ -1,5 +1,4 @@
 import type AlunaClient from "@/AlunaClient";
-import { CommandContext } from "@/structures/command";
 
 import { type Interaction } from "discord.js";
 
@@ -12,29 +11,16 @@ export default class InteractionCreate {
   }
 
   run(interaction: Interaction): void {
-    if (interaction.isCommand()) {
-      const command = this.client.commandManager.get(interaction.commandName);
-      if (!command) return;
+    if (interaction.isPrimaryEntryPointCommand()) return;
+    if (!interaction.isCommand()) return;
 
-      const args: string[] = [];
-      const parameters = command.execute.getParameters().slice(1);
-      parameters.forEach((_parameter, i) => {
-        const param = command!.options.parameters![i];
-        const option = interaction.options.get(_parameter, param.required);
-        if (!option) return;
-        args.push(option.value as string);
-      });
-      const context = new CommandContext(this.client, {
-        command,
-        args,
-        author: interaction.user,
-        channel: interaction.channel,
-        guild: interaction.guild,
-        isInteraction: true,
-        message: interaction,
-      });
+    const command = this.client.commandManager.get(interaction.commandName);
+    if (!command) return;
 
-      command?._execute(context);
+    console.log(command);
+    if (command.data.type === interaction.commandType) {
+      const executor = command.execute.bind(this.client as AlunaClient<true>);
+      executor(interaction);
     }
   }
 }

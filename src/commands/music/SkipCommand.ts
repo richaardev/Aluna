@@ -1,19 +1,21 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
 
-export default class SkipCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["skip", "pular"],
-      description: "Pule para proxima musica",
-      requirements: {
-        voiceChannelOnly: true,
-        needsGuildPlayer: true,
-      },
-    });
-  }
-  async execute(ctx: CommandContext) {
-    ctx.guildPlayer!.stop();
-    ctx.beautifulReply("⏩", "A musica foi pulada com sucesso!");
-  }
-}
+import { InteractionContextType } from "discord.js";
+
+export default createSlashCommand<"cached">({
+  name: "skip",
+  description: "Pule para proxima musica",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  async execute(interaction) {
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    
+    if (!guildPlayer) {
+      return interaction.reply({ content: "Não há nenhum player ativo!" });
+    }
+
+    await guildPlayer.skip();
+    interaction.reply({ content: "⏭️ A musica foi pulada com sucesso!" });
+  },
+});

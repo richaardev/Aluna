@@ -1,53 +1,51 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
+import { type AlunaTrackUserData } from "@/music/Types";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
+import AlunaEmbed from "@/utils/AlunaEmbed";
 
-import { createCanvas, loadImage } from "canvas";
-import { MessageAttachment } from "discord.js";
+import { InteractionContextType } from "discord.js";
 
-export default class QueueCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["queue", "q"],
-      description: "Veja as musicas que estão na playlist",
-      requirements: {
-        needsGuildPlayer: true,
-        voiceChannelOnly: true,
-      },
+export default createSlashCommand<"cached">({
+  name: "queue",
+  description: "Veja as musicas que estão na playlist",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  async execute(interaction) {
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    if (!guildPlayer) return interaction.reply({ content: "❌ Não há nenhum player ativo!" });
+
+    if (!guildPlayer.queue.current && guildPlayer.queue.tracks.length === 0)
+      return interaction.reply({ content: "❌ Não há músicas na fila!" });
+
+    const { formatDuration } = await import("@/utils/formatDuration");
+
+    let description = "";
+
+    if (guildPlayer.queue.current) {
+      const currentUserData = guildPlayer.queue.current.userData as AlunaTrackUserData | undefined;
+      description += `**🎵 Tocando agora:**\n\`${guildPlayer.queue.current.info.title}\` - ${formatDuration(guildPlayer.queue.current.info.duration || 0, guildPlayer.queue.current.info.isStream)} - <@!${currentUserData?.requestedBy}>\n\n`;
+    }
+
+    if (guildPlayer.queue.tracks.length > 0) {
+      description += `**📋 Próximas músicas (${guildPlayer.queue.tracks.length}):**\n`;
+
+      const queueTracks = guildPlayer.queue.tracks.slice(0, 10);
+      queueTracks.forEach((track, i) => {
+        const userData = track.userData as AlunaTrackUserData | undefined;
+        description += `**${i + 1}.** \`${track.info.title}\` - ${formatDuration(track.info.duration || 0, track.info.isStream)} - <@!${userData?.requestedBy}>\n`;
+      });
+
+      if (guildPlayer.queue.tracks.length > 10) {
+        description += `\n*...e mais ${guildPlayer.queue.tracks.length - 10} música(s)*`;
+      }
+    } else {
+      description += "**Nenhuma música na fila!**";
+    }
+
+    const embed = new AlunaEmbed().setDescription(description);
+
+    interaction.reply({
+      embeds: [embed],
     });
-  }
-  async execute(ctx: CommandContext) {
-    // let songs = ctx.guildPlayer!.queue.songs.map((song, i) => `**${i}.** \`${song.title} ${song.time}\` - <@!${song.requestedBy}>`).join("\n");
-    // if (songs === "" || !songs) songs = "**Nenhuma musica na fila!**";
-    // songs = `**Tocando agora: \`${ctx.guildPlayer?.queue.nowPlaying?.title}\` - <@!${ctx.guildPlayer?.queue.nowPlaying?.requestedBy}>** \n\n${songs}`;
-    // let embed = new AlunaEmbed().setDescription(songs);
-
-    // ctx.reply({
-    //     embeds: [embed],
-    // });
-
-    const canvas = createCanvas(1920, 1080);
-    const c = canvas.getContext("2d");
-    const queue = ctx.guildPlayer?.queue!.songs.slice(0, 10);
-
-    let BASE_HEIGHT = 0;
-
-    queue?.forEach(async (song) => {
-      console.log(song);
-      const info = await this.client.apis.youtube.getVideoInfo(song.identifier);
-      const thumb = await loadImage(this.client.apis.youtube.getBestThumbnail(info.snippet?.thumbnails!)!);
-
-      const reW = 500;
-      const reH = reW * (9 / 16);
-      c.drawImage(thumb, 50, BASE_HEIGHT, reW, reH);
-
-      BASE_HEIGHT += reH + 100;
-    });
-
-    const buffer = canvas.toBuffer();
-    const attachment = new MessageAttachment(buffer, "queue.png");
-
-    ctx.reply({
-      files: [attachment],
-    });
-  }
-}
+  },
+});

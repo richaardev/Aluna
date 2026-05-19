@@ -1,21 +1,21 @@
-import type AlunaClient from "@/AlunaClient";
-import { Command, type CommandContext } from "@/structures/command";
+import { createSlashCommand } from "@/structures/command";
+import { requireGuildPlayer, requireVoiceChannel } from "@/structures/command/middlewares";
 
-import { Message } from "discord.js";
+import { InteractionContextType } from "discord.js";
 
-export default class StopCommand extends Command {
-  constructor(client: AlunaClient) {
-    super(client, {
-      labels: ["stop"],
-      description: "Faça eu parar de tocar musica no canal de voz",
-      requirements: {
-        needsGuildPlayer: true,
-        voiceChannelOnly: true,
-      },
-    });
-  }
-  async execute(ctx: CommandContext) {
-    ctx.guildPlayer?.stop();
-    if (ctx.message instanceof Message) ctx.message.react("⏹️");
-  }
-}
+export default createSlashCommand<"cached">({
+  name: "stop",
+  description: "Faça eu parar de tocar musica no canal de voz",
+  contexts: [InteractionContextType.Guild],
+  middlewares: [requireVoiceChannel, requireGuildPlayer],
+  async execute(interaction) {
+    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    
+    if (!guildPlayer) {
+      return interaction.reply({ content: "Não há nenhum player ativo!" });
+    }
+
+    await guildPlayer.stopPlaying(true, false); // Clear queue, no autoplay
+    interaction.reply({ content: "⏹️ A reprodução foi parada!" });
+  },
+});
