@@ -1,35 +1,39 @@
-import { MessageEmbed, User } from "discord.js";
-import AlunaClient from "../../AlunaClient";
-import { Command, CommandContext } from "../../structures/command";
+import type { User } from "discord.js";
+import type AlunaClient from "../../AlunaClient";
+import type { CommandContext } from "../../structures/command";
+
+import { MessageEmbed } from "discord.js";
+
+import { Command } from "../../structures/command";
 import user from "../../structures/command/parameters/types/UserParameter";
 
 export default class AvatarCommand extends Command {
-    constructor(client: AlunaClient) {
-        super(client, {
-            labels: ["avatar"],
-            description: "Veja o avatar de um usuário",
-            requirements: {},
-            parameters: [
-                user({
-                    required: false,
-                    errorMessage: "",
-                }),
-            ],
-        });
-    }
-    async execute(ctx: CommandContext, user: User) {
-        user ??= ctx.author;
-        let embed = new MessageEmbed()
-            .setAuthor(ctx.author.tag, ctx.author.displayAvatarURL())
-            .setDescription(
-                `**[Clique aqui](${user.displayAvatarURL({
-                    dynamic: true,
-                    size: 2048,
-                })}) para fazer o download.**`,
-            )
-            .setImage(user.displayAvatarURL({ dynamic: true, size: 2048 }))
-            .setColor("RANDOM");
+  constructor(client: AlunaClient) {
+    super(client, {
+      labels: ["avatar"],
+      description: "Veja o avatar de um usuário",
+      requirements: {},
+      parameters: [
+        user({
+          required: false,
+          errorMessage: "",
+        }),
+      ],
+    });
+  }
+  async execute(ctx: CommandContext, user: User) {
+    user ??= ctx.author;
+    const embed = new MessageEmbed()
+      .setAuthor(ctx.author.tag, ctx.author.displayAvatarURL())
+      .setDescription(
+        `**[Clique aqui](${user.displayAvatarURL({
+          dynamic: true,
+          size: 2048,
+        })}) para fazer o download.**`,
+      )
+      .setImage(user.displayAvatarURL({ dynamic: true, size: 2048 }))
+      .setColor("RANDOM");
 
-        ctx.reply({ embeds: [embed] });
-    }
+    ctx.reply({ embeds: [embed] });
+  }
 }

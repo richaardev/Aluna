@@ -1,12 +1,12 @@
-import AlunaClient from "../AlunaClient";
+import type AlunaClient from "../AlunaClient";
 
 export default class ApiWrapper {
-    public client: AlunaClient;
-    constructor(client: AlunaClient) {
-        this.client = client;
+  public client: AlunaClient;
+  constructor(client: AlunaClient) {
+    this.client = client;
 
-        this.load = this.load.bind(this);
-        this.load();
-    }
-    load() {}
+    this.load = this.load.bind(this);
+    this.load();
+  }
+  load() {}
 }

@@ -1,6 +1,6 @@
 interface String {
-    abbreviate(precision?: number): string;
+  abbreviate(precision?: number): string;
 }
 interface Function {
-    getParameters(): string[];
+  getParameters(): string[];
 }

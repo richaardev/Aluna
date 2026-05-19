@@ -1,10 +1,11 @@
-import AlunaClient from "../AlunaClient";
+import type AlunaClient from "../AlunaClient";
+
 import YoutubeApi from "./YoutubeApi";
 
 export default class Apis {
-    youtube: YoutubeApi;
+  youtube: YoutubeApi;
 
-    constructor(client: AlunaClient) {
-        this.youtube = new YoutubeApi(client);
-    }
+  constructor(client: AlunaClient) {
+    this.youtube = new YoutubeApi(client);
+  }
 }

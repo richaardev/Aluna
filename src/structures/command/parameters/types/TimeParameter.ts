@@ -1,19 +1,20 @@
-import { ParameterInterface } from "./Parameter";
-import { CommandContext } from "../..";
+import type { CommandContext } from "../..";
+import type { ParameterInterface } from "./Parameter";
+
 import ms from "ms";
 
 export default function time(options: ParameterInterface): ParameterInterface {
-    return {
-        ...options,
-        required: options.required ?? true,
+  return {
+    ...options,
+    required: options.required ?? true,
 
-        type: "STRING",
-        parse(ctx: CommandContext, argument: string | undefined, opt: ParameterInterface) {
-            if (!argument) return null;
+    type: "STRING",
+    parse(ctx: CommandContext, argument: string | undefined, opt: ParameterInterface) {
+      if (!argument) return null;
 
-            const result = ms(argument);
-            if (!result) throw new Error("Indique um tempo válido! Ex: <10s, 3m, 1d>");
-            return result;
-        },
-    };
+      const result = ms(argument);
+      if (!result) throw new Error("Indique um tempo válido! Ex: <10s, 3m, 1d>");
+      return result;
+    },
+  };
 }

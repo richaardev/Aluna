@@ -1,8 +1,8 @@
 export interface ParameterInterface {
-    full?: boolean;
-    errorMessage: string;
-    required?: boolean;
+  full?: boolean;
+  errorMessage: string;
+  required?: boolean;
 
-    parse?: Function;
-    type?: string;
+  parse?: Function;
+  type?: string;
 }

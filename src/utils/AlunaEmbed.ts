@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
 
 export default class AlunaEmbed extends MessageEmbed {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.setColor("#5865F2");
-    }
+    this.setColor("#5865F2");
+  }
 }

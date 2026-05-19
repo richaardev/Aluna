@@ -1,26 +1,29 @@
-import ListenersManager from "./managers/ListenersManager";
-import CommandManager from "./managers/CommandManager";
-import { Client, ClientOptions, Permissions } from "discord.js";
-import AlunaPlayerManager from "./music/AlunaPlayerManager";
+import type { ClientOptions } from "discord.js";
+import type AlunaPlayerManager from "./music/AlunaPlayerManager";
+
+import { Client, PermissionsBitField } from "discord.js";
+
 import Apis from "./apis";
+import CommandManager from "./managers/CommandManager";
+import ListenersManager from "./managers/ListenersManager";
 
 export default class AlunaClient extends Client {
-    public listenerManager: ListenersManager;
-    public commandManager: CommandManager;
-    public playerManager?: AlunaPlayerManager;
-    public apis: Apis;
+  public listenerManager: ListenersManager;
+  public commandManager: CommandManager;
+  public playerManager?: AlunaPlayerManager;
+  public apis: Apis;
 
-    constructor(options: ClientOptions) {
-        super(options);
+  constructor(options: ClientOptions) {
+    super(options);
 
-        this.listenerManager = new ListenersManager(this);
-        this.commandManager = new CommandManager(this);
-        this.apis = new Apis(this);
-    }
+    this.listenerManager = new ListenersManager(this);
+    this.commandManager = new CommandManager(this);
+    this.apis = new Apis(this);
+  }
 
-    get inviteURL() {
-        let scopes = ["bot", "applications.commands"];
-        let permissions = Permissions.ALL;
-        return `https://discord.com/api/oauth2/authorize?client_id=${this.user?.id}&permissions=${permissions}&scope=${scopes.join("%20")}`;
-    }
+  get inviteURL() {
+    const scopes = ["bot", "applications.commands"];
+    const permissions = PermissionsBitField.All;
+    return `https://discord.com/api/oauth2/authorize?client_id=${this.user?.id}&permissions=${permissions}&scope=${scopes.join("%20")}`;
+  }
 }

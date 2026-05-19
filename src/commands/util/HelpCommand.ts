@@ -1,34 +1,37 @@
-import { Command, CommandContext } from "../../structures/command";
-import AlunaClient from "../../AlunaClient";
+import type AlunaClient from "../../AlunaClient";
+import type { CommandContext } from "../../structures/command";
+
 import { MessageEmbed } from "discord.js";
 
+import { Command } from "../../structures/command";
+
 export default class HelpCommand extends Command {
-    constructor(client: AlunaClient) {
-        super(client, {
-            labels: ["help"],
-            description: "Veja todos os meus comandos disponiveis para uso!",
-            requirements: {},
-        });
-    }
-    async execute(ctx: CommandContext) {
-        let embed = new MessageEmbed()
-            .setAuthor(ctx.author.username, ctx.author.displayAvatarURL())
-            .setThumbnail(this.client.user?.displayAvatarURL()!)
-            .addField("Musica", this.mapCommands("music"))
-            .addField("Utilidades", this.mapCommands("util"))
-            .addField("Moderação", this.mapCommands("moderation"))
-            .setColor("RANDOM");
+  constructor(client: AlunaClient) {
+    super(client, {
+      labels: ["help"],
+      description: "Veja todos os meus comandos disponiveis para uso!",
+      requirements: {},
+    });
+  }
+  async execute(ctx: CommandContext) {
+    const embed = new MessageEmbed()
+      .setAuthor(ctx.author.username, ctx.author.displayAvatarURL())
+      .setThumbnail(this.client.user?.displayAvatarURL()!)
+      .addField("Musica", this.mapCommands("music"))
+      .addField("Utilidades", this.mapCommands("util"))
+      .addField("Moderação", this.mapCommands("moderation"))
+      .setColor("RANDOM");
 
-        ctx.reply({
-            embeds: [embed],
-        });
-    }
+    ctx.reply({
+      embeds: [embed],
+    });
+  }
 
-    mapCommands(category: string) {
-        let u: Command[] = [];
-        this.client.commandManager.forEach((command) => {
-            if (!u.includes(command) && command.options.category === category) u.push(command);
-        });
-        return u.map((a) => `\`${a.options.labels[0]}\``).join(" ");
-    }
+  mapCommands(category: string) {
+    const u: Command[] = [];
+    this.client.commandManager.forEach((command) => {
+      if (!u.includes(command) && command.options.category === category) u.push(command);
+    });
+    return u.map((a) => `\`${a.options.labels[0]}\``).join(" ");
+  }
 }
