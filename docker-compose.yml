@@ -1,0 +1,22 @@
+services:
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4-alpine
+    container_name: lavalink
+    restart: unless-stopped
+    environment:
+      - _JAVA_OPTIONS=-Xmx6G
+      - LAVALINK_SERVER_PASSWORD=youshallnotpass
+      # - SERVER_PORT=2333
+    volumes:
+      - ./lavalink-application.yml:/opt/Lavalink/application.yml
+      - ./plugins/:/opt/Lavalink/plugins/
+    networks:
+      - lavalink
+    expose:
+      - 2333
+    ports:
+      - "2333:2333"
+
+networks:
+  lavalink:
+    name: lavalink
