@@ -20,11 +20,7 @@ export default createSlashCommand<"cached">({
   ],
   async execute(interaction) {
     const volume = interaction.options.getInteger("volume", true);
-    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
-    
-    if (!guildPlayer) {
-      return interaction.reply({ content: "Não há nenhum player ativo!" });
-    }
+    const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
 
     await guildPlayer.setVolume(volume);
     interaction.reply({ content: `🔊 O volume da musica foi alterado para \`${volume}\`` });

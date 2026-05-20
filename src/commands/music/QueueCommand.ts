@@ -11,9 +11,7 @@ export default createSlashCommand<"cached">({
   contexts: [InteractionContextType.Guild],
   middlewares: [requireVoiceChannel, requireGuildPlayer],
   async execute(interaction) {
-    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
-    if (!guildPlayer) return interaction.reply({ content: "❌ Não há nenhum player ativo!" });
-
+    const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
     if (!guildPlayer.queue.current && guildPlayer.queue.tracks.length === 0)
       return interaction.reply({ content: "❌ Não há músicas na fila!" });
 

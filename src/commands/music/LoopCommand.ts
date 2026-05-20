@@ -9,10 +9,7 @@ export default createSlashCommand<"cached">({
   contexts: [InteractionContextType.Guild],
   middlewares: [requireVoiceChannel, requireGuildPlayer],
   async execute(interaction) {
-    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
-    if (!guildPlayer) {
-      return interaction.reply({ content: "Não há nenhum player ativo!" });
-    }
+    const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
 
     if (guildPlayer.repeatMode === "track") {
       await guildPlayer.setRepeatMode("off");

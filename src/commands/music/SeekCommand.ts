@@ -18,17 +18,11 @@ export default createSlashCommand<"cached">({
   ],
   async execute(interaction) {
     const timeString = interaction.options.getString("time", true);
-    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
-
-    if (!guildPlayer) {
-      return interaction.reply({ content: "Não há nenhum player ativo!" });
-    }
+    const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
 
     const time = parseTimeString(timeString);
 
-    if (time <= 0) {
-      return interaction.reply({ content: "❌ Tempo inválido! Use formatos como: 10s, 3m, 1h" });
-    }
+    if (time <= 0) return interaction.reply({ content: "❌ Tempo inválido! Use formatos como: 10s, 3m, 1h" });
 
     await guildPlayer.seek(time);
     interaction.reply({ content: `⏩ O tempo da musica foi alterado para \`${~~(time / 1000)} segundos\`` });
@@ -50,6 +44,6 @@ function parseTimeString(timeStr: string): number {
   const value = match[1];
   const unit = match[2];
   if (!value || !unit) return 0;
-  
+
   return parseInt(value) * (units[unit] || 0);
 }

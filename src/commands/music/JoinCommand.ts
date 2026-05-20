@@ -9,8 +9,7 @@ export default createSlashCommand<"cached">({
   contexts: [InteractionContextType.Guild],
   middlewares: [requireVoiceChannel],
   async execute(interaction) {
-    const existingPlayer = this.playerManager?.getPlayer(interaction.guildId);
-
+    const existingPlayer = this.playerManager.getPlayer(interaction.guildId);
     if (existingPlayer?.connected) return interaction.reply({ content: "Eu já estou em um canal de voz" });
 
     const member = interaction.member;
@@ -19,7 +18,7 @@ export default createSlashCommand<"cached">({
     if (!voiceChannel) return interaction.reply({ content: "Você precisa estar em um canal de voz!" });
 
     try {
-      const player = await this.playerManager?.createPlayer({
+      const player = this.playerManager?.createPlayer({
         guildId: interaction.guildId,
         voiceChannelId: voiceChannel.id,
         textChannelId: interaction.channelId,

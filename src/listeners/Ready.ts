@@ -1,5 +1,4 @@
 import type AlunaClient from "@/AlunaClient";
-import AlunaPlayerManager from "@/music/AlunaPlayerManager";
 import Logger from "@/utils/Logger";
 
 import { type Client } from "discord.js";
@@ -14,8 +13,6 @@ export default class Ready {
   }
 
   async run(client: Client<true>) {
-    this.client.playerManager = new AlunaPlayerManager(this.client);
-
     await this.client.playerManager.init({ id: client.application.id });
     Logger.info(`${this.client.user?.username} is now online!`);
 

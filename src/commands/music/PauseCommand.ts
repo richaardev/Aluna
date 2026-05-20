@@ -9,7 +9,7 @@ export default createSlashCommand<"cached">({
   contexts: [InteractionContextType.Guild],
   middlewares: [requireVoiceChannel, requireGuildPlayer],
   async execute(interaction) {
-    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
+    const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
 
     if (guildPlayer?.paused) interaction.reply({ content: "⏸️ A musica já está pausada!" });
     else {

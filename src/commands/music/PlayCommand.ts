@@ -26,7 +26,6 @@ export default createSlashCommand<"cached">({
     await interaction.guild.fetch();
     const member = await interaction.member.fetch();
 
-    console.log(member.voice);
     const voiceChannelId = member?.voice?.channelId;
     if (!voiceChannelId) return interaction.reply({ content: "Você precisa estar em um canal de voz!" });
 
@@ -34,9 +33,7 @@ export default createSlashCommand<"cached">({
 
     await interaction.deferReply();
 
-    // Get or create player
     let player = this.playerManager.getPlayer(interaction.guildId);
-
     if (!player)
       player = this.playerManager.createPlayer({
         guildId: interaction.guildId,

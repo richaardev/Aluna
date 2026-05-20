@@ -34,6 +34,7 @@ export const requireGuildPlayer = createMiddleware<"cached">((client, interactio
       content: "Não há nenhuma música tocando no momento!",
       ephemeral: true,
     });
+
     return false;
   }
   return true;

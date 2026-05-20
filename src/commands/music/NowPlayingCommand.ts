@@ -10,11 +10,9 @@ export default createSlashCommand<"cached">({
   contexts: [InteractionContextType.Guild],
   middlewares: [requireVoiceChannel, requireGuildPlayer],
   async execute(interaction) {
-    const guildPlayer = this.playerManager?.getPlayer(interaction.guildId);
-
-    if (!guildPlayer || !guildPlayer.queue.current) {
-      return interaction.reply({ content: "❌ Não há nenhuma música tocando no momento!" });
-    }
+    const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
+    if (!guildPlayer.queue.current)
+      return interaction.reply({ content: "Não há nenhuma música tocando no momento!" });
 
     const _canvas = createCanvas(1080, 1280);
     const c = _canvas.getContext("2d");
@@ -29,7 +27,14 @@ export default createSlashCommand<"cached">({
     const shuffle = await loadImage(`src/assets/shuffle${""}.png`);
 
     c.fillStyle = "rgba(23, 24, 41, 0.98)";
-    (c as any).drawBlurredImage(thumbnail, 50, (_canvas.width - 1280 * (16 / 9)) / 2, 0, 1280 * (16 / 9), 1280);
+    (c as any).drawBlurredImage(
+      thumbnail,
+      50,
+      (_canvas.width - 1280 * (16 / 9)) / 2,
+      0,
+      1280 * (16 / 9),
+      1280,
+    );
     c.fillRect(0, 0, _canvas.width, _canvas.height);
     c.fillStyle = "white";
 
@@ -79,7 +84,11 @@ export default createSlashCommand<"cached">({
     const { formatCurrentTime, formatDuration } = await import("@/utils/formatDuration");
     c.fillText(formatCurrentTime(guildPlayer.position), 60, BASE_HEIGHT);
     c.textAlign = "right";
-    c.fillText(formatDuration(track.info.duration || 0, track.info.isStream), _canvas.width - 50, BASE_HEIGHT);
+    c.fillText(
+      formatDuration(track.info.duration || 0, track.info.isStream),
+      _canvas.width - 50,
+      BASE_HEIGHT,
+    );
 
     // botões
     BASE_HEIGHT += 50;
