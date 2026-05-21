@@ -17,7 +17,6 @@ export default class InteractionCreate {
     const command = this.client.commandManager.get(interaction.commandName);
     if (!command) return;
 
-    console.log(command);
     if (command.data.type === interaction.commandType) {
       const executor = command.execute.bind(this.client as AlunaClient<true>);
       executor(interaction);
