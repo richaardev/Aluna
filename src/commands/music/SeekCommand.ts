@@ -11,7 +11,7 @@ export default createSlashCommand<"cached">({
   options: [
     {
       name: "time",
-      description: "Tempo (Ex: 10s, 3m, 1d)",
+      description: "Tempo (Ex: 10s, 3m, 10%)",
       type: ApplicationCommandOptionType.String,
       required: true,
     },
@@ -19,18 +19,23 @@ export default createSlashCommand<"cached">({
   async execute(interaction) {
     const timeString = interaction.options.getString("time", true);
     const guildPlayer = this.playerManager.getPlayer(interaction.guildId)!;
+    const track = guildPlayer.queue.current;
 
-    const time = parseTimeString(timeString);
+    if (!track) return interaction.reply({ content: "Nenhuma musica está tocando no momento." });
+    if (!track.info.isSeekable) return interaction.reply({ content: "Esta musica não permite seek." });
 
-    if (time <= 0) return interaction.reply({ content: "❌ Tempo inválido! Use formatos como: 10s, 3m, 1h" });
+    const trackDuration = track.info.duration;
+    const time = parseTimeString(timeString, trackDuration);
+
+    if (time <= 0)
+      return interaction.reply({ content: "Tempo inválido! Use formatos como: 10s, 3m, 1h, 50%" });
 
     await guildPlayer.seek(time);
-    interaction.reply({ content: `⏩ O tempo da musica foi alterado para \`${~~(time / 1000)} segundos\`` });
+    interaction.reply({ content: `O tempo da musica foi alterado para \`${~~(time / 1000)} segundos\`` });
   },
 });
 
-// Helper function to parse time strings like "10s", "3m", "1d"
-function parseTimeString(timeStr: string): number {
+function parseTimeString(timeStr: string, trackDuration?: number): number {
   const units: Record<string, number> = {
     s: 1000,
     m: 60 * 1000,
@@ -38,12 +43,17 @@ function parseTimeString(timeStr: string): number {
     d: 24 * 60 * 60 * 1000,
   };
 
-  const match = timeStr.match(/^(\d+)([smhd])$/);
+  const match = timeStr.match(/^(\d+)([smhd%])$/);
   if (!match) return 0;
 
   const value = match[1];
   const unit = match[2];
   if (!value || !unit) return 0;
+
+  if (unit === "%") {
+    if (!trackDuration) return 0;
+    return Math.round((parseInt(value) / 100) * trackDuration);
+  }
 
   return parseInt(value) * (units[unit] || 0);
 }
